@@ -1,0 +1,19 @@
+{
+  "name": "@chainproof/crypto",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "ethers": "^6.13.0",
+    "exifr": "^7.1.3",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
+    "snarkjs": "^0.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@chainproof/types": "*"
+  }
+}
