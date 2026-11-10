@@ -1,0 +1,19 @@
+{
+  "name": "@chainproof/contracts",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "compile": "HARDHAT_TELEMETRY_DISABLED=1 hardhat compile",
+    "test": "HARDHAT_TELEMETRY_DISABLED=1 hardhat test",
+    "deploy": "HARDHAT_TELEMETRY_DISABLED=1 hardhat run scripts/deploy.ts",
+    "build": "HARDHAT_TELEMETRY_DISABLED=1 hardhat compile"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.0",
+    "ethers": "^6.13.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0"
+  }
+}

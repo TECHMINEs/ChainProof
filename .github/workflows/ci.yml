@@ -1,0 +1,45 @@
+name: ChainProof CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  contracts:
+    name: Smart contracts · Hardhat tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx hardhat test
+        working-directory: apps/contracts
+        env:
+          HARDHAT_TELEMETRY_DISABLED: 1
+
+  web:
+    name: Web · lint · strict types · build
+    runs-on: ubuntu-latest
+    env:
+      # Placeholders only: the build never connects to these services
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+      JWT_SECRET: ci-only-not-a-secret
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run db:generate
+      - run: npx next lint
+        working-directory: apps/web
+      - run: npx tsc --noEmit -p .
+        working-directory: apps/web
+      - run: npx next build
+        working-directory: apps/web

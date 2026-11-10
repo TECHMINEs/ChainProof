@@ -1,0 +1,245 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  ADMIN
+  OFFICER
+  REGISTRAR
+  AUDITOR
+}
+
+enum EvidenceStatus {
+  REGISTERED
+  IN_TRANSIT
+  STORED
+  VERIFIED
+  FLAGGED
+  ARCHIVED
+}
+
+enum ChainSyncStatus {
+  PENDING
+  SYNCING
+  SYNCED
+  FAILED
+}
+
+enum EvidenceType {
+  DOCUMENT
+  PHYSICAL
+  DIGITAL
+  BIOMETRIC
+  WEAPON
+  DRUG
+  OTHER
+}
+
+enum TransferStatus {
+  PENDING
+  COMPLETED
+  REJECTED
+  FAILED
+}
+
+enum AlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model User {
+  id            String   @id @default(uuid())
+  employeeId    String   @unique
+  name          String
+  email         String   @unique
+  password      String
+  phone         String?
+  role          UserRole
+  department    String
+  badgeNumber   String?
+  walletAddress String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  casesAsOfficer  Case[]     @relation("CaseOfficer")
+  evidenceReg     Evidence[] @relation("EvidenceRegistrar")
+  transfersFrom   Transfer[] @relation("TransferFrom")
+  transfersTo     Transfer[] @relation("TransferTo")
+  reports         Report[]
+  auditLogs       AuditLog[]
+  notifications   Notification[]
+  passkeyCredentials PasskeyCredential[]
+}
+
+model PasskeyCredential {
+  id                String   @id @default(uuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id])
+  credentialId      String   @unique
+  publicKey         Bytes
+  counter           BigInt   @default(0)
+  transports        String[]
+  deviceType        String?
+  backedUp          Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  lastUsedAt        DateTime?
+}
+
+model EvidenceCounter {
+  id       Int @id @default(1)
+  sequence Int @default(1)
+}
+
+model Case {
+  id              String   @id @default(uuid())
+  caseNumber      String   @unique
+  title           String
+  description     String
+  incidentDate    DateTime
+  incidentLocation String
+  status          String
+  priority        String
+  officerId       String
+  officer         User     @relation("CaseOfficer", fields: [officerId], references: [id])
+  courtName       String?
+  prosecutorName  String?
+  ipfsReportCid   String?
+  evidenceCount   Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  evidence        Evidence[]
+  reports         Report[]
+}
+
+model Evidence {
+  id                    String         @id @default(uuid())
+  evidenceNumber        String         @unique
+  caseId                String
+  case                  Case           @relation(fields: [caseId], references: [id])
+  registrarId           String
+  registrar             User           @relation("EvidenceRegistrar", fields: [registrarId], references: [id])
+  type                  EvidenceType
+  status                EvidenceStatus
+  description           String
+  quantity              Int
+  unit                  String?
+  collectionDate        DateTime
+  collectionLocation    String
+  collectionLatitude    Float?
+  collectionLongitude   Float?
+  collectionAddress     String?
+  storageLocation       String?
+  exifData              Json?
+  imageUrls             String[]
+  ipfsCid               String?
+  sha256Hash            String?
+  merkleLeafHash        String?
+  blockchainTxHash      String?
+  blockchainBlockNumber Int?
+  integrityScore        Int            @default(100)
+  tamperEvidence        Json?
+  qrCodeUrl             String?
+  qrCodeSvg             String?
+  notes                 String?
+  tags                  String[]
+  chainSyncStatus       ChainSyncStatus @default(PENDING)
+  merkleProofPath       String[]
+  merkleBatchId         String?
+  lastVerifiedAt        DateTime?
+  transferCount         Int            @default(0)
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+
+  transfers             Transfer[]
+  reports               Report[]
+}
+
+model Transfer {
+  id                    String         @id @default(uuid())
+  evidenceId            String
+  evidence              Evidence       @relation(fields: [evidenceId], references: [id])
+  fromUserId            String
+  fromUser              User           @relation("TransferFrom", fields: [fromUserId], references: [id])
+  toUserId              String
+  toUser                User           @relation("TransferTo", fields: [toUserId], references: [id])
+  status                TransferStatus
+  purpose               String
+  fromSignature         String?
+  toSignature           String?
+  fromSignedAt          DateTime?
+  toSignedAt            DateTime?
+  latitude              Float?
+  longitude             Float?
+  address               String?
+  combinedDataHash      String?
+  blockchainTxHash      String?
+  blockchainBlockNumber Int?
+  zkProof               Json?
+  zkVerified            Boolean        @default(false)
+  notes                 String?
+  rejectionReason       String?
+  transferredAt         DateTime       @default(now())
+  syncedToChainAt       DateTime?
+}
+
+model MerkleCheckpoint {
+  id            String   @id @default(uuid())
+  batchId       String   @unique
+  merkleRoot    String
+  leafHashes    String[]
+  txHash        String?
+  blockNumber   Int?
+  createdAt     DateTime @default(now())
+}
+
+model Report {
+  id            String   @id @default(uuid())
+  caseId        String?
+  case          Case?    @relation(fields: [caseId], references: [id])
+  evidenceId    String?
+  evidence      Evidence? @relation(fields: [evidenceId], references: [id])
+  generatedById String
+  generatedBy   User     @relation(fields: [generatedById], references: [id])
+  reportType    String
+  title         String
+  ipfsCid       String?
+  pdfUrl        String?
+  txHash        String?
+  createdAt     DateTime @default(now())
+}
+
+model Notification {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  type          String
+  title         String
+  message       String
+  metadata      Json?
+  isRead        Boolean  @default(false)
+  createdAt     DateTime @default(now())
+}
+
+model AuditLog {
+  id            String        @id @default(uuid())
+  userId        String?
+  user          User?         @relation(fields: [userId], references: [id])
+  action        String
+  entityType    String
+  entityId      String?
+  details       Json?
+  ipAddress     String?
+  userAgent     String?
+  severity      AlertSeverity
+  flagged       Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+}
