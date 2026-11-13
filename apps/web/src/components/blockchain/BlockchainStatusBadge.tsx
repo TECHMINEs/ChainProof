@@ -16,8 +16,8 @@ export function BlockchainStatusBadge({ status, txHash }: BlockchainStatusBadgeP
     dotColor = 'bg-green-500 animate-pulse';
     label = 'Secured on EVM';
   } else if (status === 'PENDING') {
-    bgColor = 'bg-yellow-950/40 text-yellow-400 dark:bg-yellow-900/30 dark:text-yellow-400 border border-yellow-500/20';
-    dotColor = 'bg-yellow-500';
+    bgColor = 'bg-panel-2 text-white dark:bg-panel-2 dark:text-white border border-stroke';
+    dotColor = 'bg-white';
   } else if (status === 'FAILED') {
     bgColor = 'bg-red-950/40 text-red-400 dark:bg-red-900/30 dark:text-red-400 border border-red-500/20';
     dotColor = 'bg-red-500';

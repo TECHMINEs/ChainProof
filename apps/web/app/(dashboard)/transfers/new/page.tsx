@@ -87,9 +87,9 @@ export default function InitiateTransferPage() {
             />
           </div>
 
-          <div className="p-4 bg-orange-500/5 border border-orange-500/20 rounded-lg text-sm text-orange-300">
+          <div className="p-4 bg-white/5 border border-stroke rounded-lg text-sm text-white">
             <p className="font-semibold mb-1">🔐 Zero-Knowledge Proof Generation</p>
-            <p className="text-orange-400/70 text-xs">This transfer will generate a Groth16 ZK-SNARK proof using Circom. The receiving officer must sign with their passkey or Ethereum wallet to complete the handoff.</p>
+            <p className="text-white/70 text-xs">This transfer will generate a Groth16 ZK-SNARK proof using Circom. The receiving officer must sign with their passkey or Ethereum wallet to complete the handoff.</p>
           </div>
 
           <button type="submit" disabled={loading} className="btn-primary w-full">

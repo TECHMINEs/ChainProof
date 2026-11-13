@@ -5,11 +5,11 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from 'recharts'
 import ErrorBoundary from '@/components/ErrorBoundary'
-import CustomTooltip from '@/components/charts/PlasmaTooltip'
+import CustomTooltip from '@/components/charts/ChartTooltip'
 import type { AnalyticsOverview, TransfersByDayEntry, EvidenceByTypeEntry, Evidence, Transfer } from '@chainproof/types'
 
-const NEON_RED = '#FF0000'
-const COLORS = ['#FF0000', '#ff6b6b', '#ff9e9e', '#ffc8c8', '#FF5F1F', '#00FFFF']
+const NEON_RED = '#FF2626'
+const COLORS = ['#FF2626', '#ff6b6b', '#ff9e9e', '#ffc8c8', '#A9A9A9', '#FFFFFF']
 
 function StatCard({ title, value, icon }: { title: string; value: string | number; icon: string }) {
   return (
@@ -66,9 +66,9 @@ export default function DashboardPage() {
     return (
       <div className="space-y-6 animate-pulse">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[...Array(4)].map((_, i) => <div key={i} className="h-32 bg-void-100 rounded-xl border border-red-900/40" />)}
+          {[...Array(4)].map((_, i) => <div key={i} className="h-32 bg-void-100 rounded-xl border border-line" />)}
         </div>
-        <div className="h-64 bg-void-100 rounded-xl border border-red-900/40" />
+        <div className="h-64 bg-void-100 rounded-xl border border-line" />
       </div>
     )
   }
@@ -152,7 +152,7 @@ export default function DashboardPage() {
             </h3>
             <div className="space-y-2">
               {myEvidence.map((ev) => (
-                <div key={ev.id} className="flex items-center justify-between p-3 bg-[#050505]/60 rounded-lg border border-red-900/40">
+                <div key={ev.id} className="flex items-center justify-between p-3 bg-[#050505]/60 rounded-lg border border-line">
                   <div className="flex items-center gap-3">
                     <span className="font-mono text-brand-400 text-xs font-bold">{ev.evidenceNumber}</span>
                     <span className="text-neutral-400 text-sm">{ev.description?.slice(0, 50)}</span>

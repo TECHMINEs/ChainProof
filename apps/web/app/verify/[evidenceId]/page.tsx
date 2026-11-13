@@ -25,10 +25,10 @@ export default function VerificationPortalPage() {
   }, [evidenceId])
 
   return (
-    <div className="flex-1 bg-[#050505] text-white flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-2xl bg-[#111111] rounded-2xl shadow-2xl overflow-hidden border border-red-900/40">
-        <div className="p-8 text-center bg-[#050505] border-b border-red-900/40">
-          <Image src="/techmines-logo.jpg" alt="TECHMINES logo" width={64} height={64} className="w-16 h-16 mx-auto mb-4 object-cover border-2 border-[#FF0000] shadow-neon-sm" />
+    <div className="flex-1 text-white flex flex-col items-center justify-center p-4">
+      <div className="tm-card w-full max-w-2xl overflow-hidden">
+        <div className="p-8 text-center bg-[#050505] border-b border-line">
+          <Image src="/logo-mark.svg" alt="ChainProof logo" width={64} height={64} className="w-16 h-16 mx-auto mb-4" unoptimized />
           <h1 className="text-3xl font-bold tracking-tight">ChainProof Verification Portal</h1>
           <p className="text-neutral-400 mt-2">Public Chain of Custody Validation</p>
         </div>
@@ -36,7 +36,7 @@ export default function VerificationPortalPage() {
         <div className="p-8">
           {loading ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500 mx-auto mb-4"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-stroke mx-auto mb-4"></div>
               <p className="text-neutral-400 font-mono">Querying Ethereum Network & IPFS...</p>
             </div>
           ) : error ? (
@@ -47,14 +47,14 @@ export default function VerificationPortalPage() {
             </div>
           ) : data ? (
             <div className="space-y-6">
-              <div className="flex items-center justify-between p-4 bg-[#050505] rounded-lg border border-red-900/40">
+              <div className="flex items-center justify-between p-4 bg-[#050505] rounded-lg border border-line">
                 <div>
                   <p className="text-sm text-neutral-400">Evidence ID</p>
                   <p className="text-xl font-mono font-bold">{data.evidenceNumber}</p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm text-neutral-400">Current Status</p>
-                  <p className="text-lg font-bold text-cyan-400">{data.currentStatus}</p>
+                  <p className="text-lg font-bold text-white">{data.currentStatus}</p>
                 </div>
               </div>
 
@@ -69,17 +69,17 @@ export default function VerificationPortalPage() {
                   </div>
                 </div>
 
-                <div className={`p-4 rounded-lg border ${data.blockchainVerified ? 'bg-cyan-900/20 border-cyan-500/50' : 'bg-yellow-900/20 border-yellow-500/50'}`}>
+                <div className={`p-4 rounded-lg border ${data.blockchainVerified ? 'bg-panel-2 border-stroke' : 'bg-panel-2 border-stroke'}`}>
                   <p className="text-sm text-neutral-400 mb-1">Blockchain Sync</p>
-                  <p className={`text-lg font-bold ${data.blockchainVerified ? 'text-cyan-400' : 'text-yellow-400'}`}>
+                  <p className={`text-lg font-bold ${data.blockchainVerified ? 'text-white' : 'text-white'}`}>
                     {data.blockchainVerified ? 'VERIFIED ON EVM' : 'PENDING SYNC'}
                   </p>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-red-900/40">
+              <div className="pt-4 border-t border-line">
                 <p className="text-xs text-neutral-500 mb-1">Cryptographic Token (SHA-256)</p>
-                <p className="text-xs font-mono break-all text-neutral-300 bg-[#050505] p-3 rounded border border-red-900/40">
+                <p className="text-xs font-mono break-all text-neutral-300 bg-[#050505] p-3 rounded border border-line">
                   {data.verificationToken}
                 </p>
               </div>

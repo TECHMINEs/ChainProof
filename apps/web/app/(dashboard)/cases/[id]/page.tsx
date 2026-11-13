@@ -35,12 +35,12 @@ export default function CaseDetailsPage() {
         </span>
       </div>
 
-      <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-red-900/40 dark:border-red-900/40 shadow-sm">
+      <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-line dark:border-line shadow-sm">
         <h2 className="text-lg font-bold dark:text-white mb-4">Evidence Registry</h2>
         {caseData.evidence?.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {caseData.evidence.map((ev) => (
-              <Link href={`/evidence/${ev.id}`} key={ev.id} className="block p-4 border border-red-900/40 dark:border-red-900/40 rounded-lg hover:border-cyan-500 transition-colors">
+              <Link href={`/evidence/${ev.id}`} key={ev.id} className="block p-4 border border-line dark:border-line rounded-lg hover:border-stroke transition-colors">
                 <div className="flex justify-between mb-2">
                   <span className="font-mono text-sm font-bold dark:text-neutral-300">{ev.evidenceNumber}</span>
                   <EvidenceStatusBadge status={ev.status} />

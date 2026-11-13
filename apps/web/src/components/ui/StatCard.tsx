@@ -11,8 +11,8 @@ export interface StatCardProps {
 
 export function StatCard({ title, value, icon, trend, trendUp }: StatCardProps) {
   return (
-    <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-red-900/40 dark:border-red-900/40 shadow-sm relative overflow-hidden">
-      <div className="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 rounded-full bg-cyan-950/40 dark:bg-cyan-900/10 opacity-50 pointer-events-none" />
+    <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-line dark:border-line shadow-sm relative overflow-hidden">
+      <div className="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 rounded-full bg-panel-2 dark:bg-panel-2 opacity-50 pointer-events-none" />
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-medium text-neutral-500 dark:text-neutral-400">{title}</h3>
         {icon && <div className="text-neutral-400 dark:text-neutral-500">{icon}</div>}

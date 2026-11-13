@@ -97,20 +97,20 @@ export default function TransfersPage() {
         </div>
 
         {actionError && (
-          <div role="alert" className="border border-[#FF0000]/60 bg-red-950/30 px-4 py-3 text-sm text-[#FF3B3B]">
+          <div role="alert" className="border border-[#FF2626]/60 bg-red-950/30 px-4 py-3 text-sm text-[#FF3B3B]">
             {actionError}
           </div>
         )}
 
         {/* Pending incoming — action required */}
         {pendingIncoming.length > 0 && (
-          <div className="card border-yellow-500/30 bg-yellow-500/5">
-            <h2 className="text-sm font-bold text-yellow-400 mb-3 flex items-center gap-2">
+          <div className="card border-stroke bg-white/5">
+            <h2 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
               <span>⏳</span> {pendingIncoming.length} Incoming Transfer{pendingIncoming.length > 1 ? 's' : ''} Awaiting Your Action
             </h2>
             <div className="space-y-3">
               {pendingIncoming.map((t) => (
-                <div key={t.id} className="flex items-center justify-between p-3 bg-[#050505]/60 rounded-lg border border-red-900/40">
+                <div key={t.id} className="flex items-center justify-between p-3 bg-[#050505]/60 rounded-lg border border-line">
                   <div>
                     <p className="text-white font-semibold text-sm">{t.evidence?.evidenceNumber || t.evidenceId}</p>
                     <p className="text-neutral-500 text-xs mt-0.5">From: {t.fromUser?.name} · Purpose: {t.purpose}</p>
@@ -172,7 +172,7 @@ export default function TransfersPage() {
                   </td>
                   <td className="table-td text-right">
                     {t.blockchainTxHash ? (
-                      <span className="text-emerald-400 text-xs font-mono" title={t.blockchainTxHash}>
+                      <span className="text-green-400 text-xs font-mono" title={t.blockchainTxHash}>
                         ✓ On-chain
                       </span>
                     ) : t.status === 'COMPLETED' ? (

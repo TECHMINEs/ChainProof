@@ -73,27 +73,22 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
 
 const Logo = () => (
   <div className="flex items-center gap-3">
-    <div className="w-10 h-10 bg-black border border-[#FF0000] p-1 flex items-center justify-center shadow-[0_0_12px_rgba(255,0,0,0.6)] flex-shrink-0">
-      <Image src="/techmines-logo.jpg" alt="TECHMINES logo" width={40} height={40} className="w-full h-full object-cover" />
-    </div>
-    <div>
-      <div className="flex items-center gap-1.5">
-        <span className="text-white font-black tracking-wider text-sm font-mono block">Chain<span className="text-[#FF0000]">Proof</span></span>
-        <span className="bg-[#FF0000] text-black text-[8px] font-black px-1 py-0.2 uppercase font-mono">PLASMA</span>
-      </div>
-      <span className="text-[#00FFFF] text-[10px] font-mono tracking-tight">Forensic Cryptographic CoC</span>
+    <Image src="/logo-mark.svg" alt="ChainProof logo" width={40} height={40} className="w-10 h-10 flex-shrink-0" unoptimized />
+    <div className="grid leading-none">
+      <span className="font-display font-bold text-xl tracking-[0.03em] text-white uppercase">Chain<span className="text-[#FF2626]">Proof</span></span>
+      <span className="mt-1 text-[10px] font-mono font-bold tracking-[0.22em] text-[#FF2626] uppercase">By TECHMINES</span>
     </div>
   </div>
 )
 
 const SidebarFooter = () => (
-  <div className="p-3 border-t border-red-900/40 bg-black space-y-2">
+  <div className="p-3 border-t border-line bg-black space-y-2">
     <div className="flex items-center justify-between px-1">
       <div className="flex items-center gap-2">
         <div className="w-2 h-2 bg-[#39FF14] shadow-[0_0_6px_#39FF14]" />
         <span className="text-[11px] font-mono text-neutral-400">Polygon Active</span>
       </div>
-      <span className="text-[10px] font-mono text-[#FF5F1F]">v1.0.0</span>
+      <span className="text-[10px] font-mono text-white">v1.0.0</span>
     </div>
   </div>
 )
@@ -105,7 +100,7 @@ export function Sidebar() {
     <>
       {/* Mobile hamburger — always visible on mobile, overlays header */}
       <button
-        className="fixed top-[3.375rem] left-4 z-40 md:hidden w-9 h-9 flex items-center justify-center bg-void-100 border border-red-900/40 rounded-lg text-neutral-400 hover:text-white hover:border-brand-500/40 transition-all"
+        className="fixed top-[3.375rem] left-4 z-40 md:hidden w-9 h-9 flex items-center justify-center bg-void-100 border border-line rounded-lg text-neutral-400 hover:text-white hover:border-brand-500/40 transition-all"
         onClick={() => setMobileOpen(true)}
         aria-label="Open navigation"
       >
@@ -124,11 +119,11 @@ export function Sidebar() {
 
       {/* Mobile slide-in drawer */}
       <aside
-        className={`fixed inset-y-0 left-0 z-[70] w-72 bg-black border-r border-red-900/40 flex flex-col transform transition-transform duration-200 ease-in-out md:hidden ${
+        className={`fixed inset-y-0 left-0 z-[70] w-72 bg-black border-r border-line flex flex-col transform transition-transform duration-200 ease-in-out md:hidden ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="p-5 flex items-center justify-between border-b border-red-900/40">
+        <div className="p-5 flex items-center justify-between border-b border-line">
           <Logo />
           <button onClick={() => setMobileOpen(false)} className="text-neutral-500 hover:text-white text-2xl leading-none ml-2">
             &times;
@@ -141,8 +136,8 @@ export function Sidebar() {
       </aside>
 
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex sticky top-11 w-64 h-[calc(100dvh-2.75rem)] bg-black border-r border-red-900/40 flex-col flex-shrink-0">
-        <div className="p-5 flex items-center gap-3 border-b border-red-900/40">
+      <aside className="hidden md:flex sticky top-11 w-64 h-[calc(100dvh-2.75rem)] bg-black/80 backdrop-blur-xl border-r border-line flex-col flex-shrink-0">
+        <div className="p-5 flex items-center gap-3 border-b border-line">
           <Logo />
         </div>
         <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">

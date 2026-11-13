@@ -21,39 +21,30 @@ module.exports = {
     },
     extend: {
       colors: {
-        // Sharp Edged Plasma Brand Colors
+        // TECHMINES portfolio tokens (techmines.github.io)
+        panel: { DEFAULT: '#0E0E0E', 2: '#171717' },
+        line: '#2E2E2E',
+        stroke: '#4D4D4D',
+        dim: '#A9A9A9',
+        body: '#E2E2E2',
+        // Brand red scale (500 is the portfolio red)
         brand: {
           50:  '#fff0f3',
           100: '#ffd6de',
           200: '#ffacbc',
           300: '#FF6B6B',
           400: '#FF3B3B',
-          500: '#FF0000', // Primary Brightest Red
-          600: '#DC2626',
+          500: '#FF2626', // Primary Brightest Red
+          600: '#F5141F',
           700: '#B91C1C',
           800: '#991B1B',
-          900: '#7F1D1D',
+          900: '#2E2E2E',
         },
-        cyber: {
-          orange: '#FF5F1F',
-          cyan: '#00FFFF',
-          green: '#39FF14',
-          red: '#FF0000',
-        },
-        cyan: { 300: '#66FFFF', 400: '#00FFFF', 500: '#00E5E5' },
         green: { 400: '#39FF14', 500: '#32E012' },
-        emerald: { 400: '#39FF14', 500: '#32E012' },
-        orange: { 400: '#FF7A45', 500: '#FF5F1F' },
-        red: { 400: '#FF3B3B', 500: '#FF0000', 600: '#DC2626' },
+        red: { 400: '#FF3B3B', 500: '#FF2626', 600: '#F5141F' },
         // Deepest black surface
         void: {
-          50:  '#111111',
-          100: '#0a0a0a',
-          200: '#070707',
-          300: '#050505',
-          400: '#030303',
-          500: '#020202',
-          900: '#000000',
+          50: '#171717', 100: '#0E0E0E', 200: '#080808', 300: '#080808', 400: '#000000', 500: '#000000', 900: '#000000',
         },
         zinc: {
           900: '#0a0a0a',
@@ -68,18 +59,14 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        display: ['var(--font-chakra)', '"Chakra Petch"', '"Arial Narrow"', 'sans-serif'],
+        sans: ['var(--font-plex)', '"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-jetbrains)', '"JetBrains Mono"', 'ui-monospace', 'Menlo', 'monospace'],
       },
       boxShadow: {
-        'plasma-sm': '0 0 10px rgba(255, 0, 0, 0.45)',
-        'plasma': '0 0 20px rgba(255, 0, 0, 0.65)',
-        'plasma-lg': '0 0 35px rgba(255, 0, 0, 0.85)',
-        'cyber-cyan': '0 0 15px rgba(0, 255, 255, 0.5)',
-        'cyber-orange': '0 0 15px rgba(255, 95, 31, 0.5)',
-        'neon': '0 0 20px rgba(255, 0, 0, 0.55), 0 0 40px rgba(255, 0, 0, 0.2)',
-        'neon-sm': '0 0 10px rgba(255, 0, 0, 0.45)',
-        'neon-inner': 'inset 0 0 20px rgba(255, 0, 0, 0.08)',
+        'neon': '0 0 20px rgba(255,38,38, 0.55), 0 0 40px rgba(255,38,38, 0.2)',
+        'neon-sm': '0 0 10px rgba(255,38,38, 0.45)',
+        'neon-inner': 'inset 0 0 20px rgba(255,38,38, 0.08)',
         'void': '0 8px 32px rgba(0, 0, 0, 0.9)',
       },
       animation: {
@@ -89,8 +76,8 @@ module.exports = {
       },
       keyframes: {
         pulseNeon: {
-          '0%, 100%': { boxShadow: '0 0 10px rgba(255, 0, 0, 0.35)' },
-          '50%': { boxShadow: '0 0 30px rgba(255, 0, 0, 0.8), 0 0 60px rgba(255, 0, 0, 0.3)' },
+          '0%, 100%': { boxShadow: '0 0 10px rgba(255,38,38, 0.35)' },
+          '50%': { boxShadow: '0 0 30px rgba(255,38,38, 0.8), 0 0 60px rgba(255,38,38, 0.3)' },
         },
         scanLine: {
           '0%': { transform: 'translateY(-100%)' },
@@ -102,7 +89,7 @@ module.exports = {
         },
       },
       backgroundImage: {
-        'grid-pattern': 'linear-gradient(rgba(255,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,0,0,0.04) 1px, transparent 1px)',
+        'grid-pattern': 'linear-gradient(rgba(255,38,38,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,38,38,0.04) 1px, transparent 1px)',
       },
     },
   },

@@ -33,19 +33,19 @@ function DashboardHeader() {
 
   const roleColor: Record<string, string> = {
     ADMIN: 'text-brand-400',
-    OFFICER: 'text-cyan-400',
-    REGISTRAR: 'text-orange-400',
-    AUDITOR: 'text-emerald-400',
+    OFFICER: 'text-white',
+    REGISTRAR: 'text-white',
+    AUDITOR: 'text-green-400',
   }
 
   return (
-    <header className="sticky top-11 z-30 h-14 flex items-center justify-between px-6 border-b border-red-900/40 bg-black/90 backdrop-blur-sm flex-shrink-0 pl-16 md:pl-6">
+    <header className="sticky top-11 z-30 h-14 flex items-center justify-between px-6 border-b border-line bg-black/80 backdrop-blur-sm flex-shrink-0 pl-16 md:pl-6">
       <div className="text-sm text-neutral-400 font-mono hidden sm:block">
         Forensic Infrastructure v1.0
       </div>
       <div className="flex items-center gap-4 ml-auto">
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.7)]" />
+          <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(16,185,129,0.7)]" />
           <span className="text-xs text-neutral-500 hidden sm:inline">Connected</span>
         </div>
         {user && (
@@ -56,7 +56,7 @@ function DashboardHeader() {
                 {user.role}
               </span>
             </div>
-            <div className="w-8 h-8 rounded-full bg-void-100 border border-red-900/40 flex items-center justify-center text-xs font-bold text-neutral-300">
+            <div className="w-8 h-8 rounded-full bg-void-100 border border-line flex items-center justify-center text-xs font-bold text-neutral-300">
               {initials}
             </div>
           </div>
@@ -91,7 +91,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <QueryProvider>
       <Web3Provider>
         {/* Single page scroll: sidebar and header stick beneath the 44px brand bar */}
-        <div className="flex flex-1 bg-black">
+        <div className="flex flex-1">
           <Sidebar />
           <div className="flex flex-col flex-1 min-w-0">
             <DashboardHeader />

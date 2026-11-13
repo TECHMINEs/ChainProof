@@ -53,8 +53,8 @@ export default function ScannerPage() {
             <p className="text-neutral-400 font-medium">Verifying Evidence Payload...</p>
           </div>
         ) : (
-          <div className="card border-red-900/40">
-            <div className="relative rounded-lg overflow-hidden border border-red-900/40">
+          <div className="card border-line">
+            <div className="relative rounded-lg overflow-hidden border border-line">
                <QRScanner onScan={handleScan} />
                {/* Scanner Overlay Visuals */}
                <div className="scanner-corner scanner-corner-tl" />
@@ -63,7 +63,7 @@ export default function ScannerPage() {
                <div className="scanner-corner scanner-corner-br" />
             </div>
             
-            <div className="mt-8 pt-6 border-t border-red-900/40 text-center">
+            <div className="mt-8 pt-6 border-t border-line text-center">
               <h3 className="font-semibold text-xs text-neutral-300 uppercase tracking-widest mb-2">Offline-First Engine</h3>
               <p className="text-xs text-neutral-400">
                 If disconnected, scans are cached locally and synchronized with the Polygon mainnet once a secure connection is re-established.

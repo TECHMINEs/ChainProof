@@ -39,7 +39,7 @@ function CreateUserModal({ onClose, onCreated }: { onClose: () => void; onCreate
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className="w-full max-w-lg card border-red-900/40 shadow-void max-h-[90vh] overflow-y-auto">
+      <div className="w-full max-w-lg card border-line shadow-void max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-lg font-bold text-white">Create New User</h2>
           <button onClick={onClose} className="text-neutral-500 hover:text-white text-xl leading-none">&times;</button>
@@ -158,7 +158,7 @@ export default function AdminUsersPage() {
           <button className="btn-primary" onClick={() => setShowModal(true)}>+ Create User</button>
         </div>
         {error && (
-          <div role="alert" className="border border-[#FF0000]/60 bg-red-950/30 px-4 py-3 text-sm text-[#FF3B3B]">{error}</div>
+          <div role="alert" className="border border-[#FF2626]/60 bg-red-950/30 px-4 py-3 text-sm text-[#FF3B3B]">{error}</div>
         )}
         <div className="table-container">
           <table className="min-w-full">
@@ -200,7 +200,7 @@ export default function AdminUsersPage() {
                     <button
                       onClick={() => toggleActive(u.id, u.isActive)}
                       className={`text-xs font-semibold transition-colors ${
-                        u.isActive ? 'text-brand-400 hover:text-brand-300' : 'text-emerald-400 hover:text-emerald-300'
+                        u.isActive ? 'text-brand-400 hover:text-brand-300' : 'text-green-400 hover:text-green-300'
                       }`}
                     >
                       {u.isActive ? 'Deactivate' : 'Activate'}

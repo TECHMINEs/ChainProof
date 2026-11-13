@@ -44,8 +44,8 @@ export default function EvidenceDetailsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-6">
-          <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-red-900/40 dark:border-red-900/40 shadow-sm">
-            <h2 className="text-lg font-bold mb-4 dark:text-white border-b border-red-900/40 dark:border-red-900/40 pb-2">Details</h2>
+          <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-line dark:border-line shadow-sm">
+            <h2 className="text-lg font-bold mb-4 dark:text-white border-b border-line dark:border-line pb-2">Details</h2>
             <p className="dark:text-neutral-300">{evidence.description}</p>
             <div className="grid grid-cols-2 gap-4 mt-4 text-sm">
               <div>
@@ -59,39 +59,39 @@ export default function EvidenceDetailsPage() {
             </div>
             {evidence.imageUrls?.[0] && (
               <div className="mt-6">
-                <Image src={evidence.imageUrls[0]} alt={`Evidence photo for ${evidence.evidenceNumber}`} width={512} height={256} className="max-h-64 w-auto object-cover border border-red-900/40" />
+                <Image src={evidence.imageUrls[0]} alt={`Evidence photo for ${evidence.evidenceNumber}`} width={512} height={256} className="max-h-64 w-auto object-cover border border-line" />
               </div>
             )}
           </div>
 
-          <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-red-900/40 dark:border-red-900/40 shadow-sm">
-            <h2 className="text-lg font-bold mb-4 dark:text-white border-b border-red-900/40 dark:border-red-900/40 pb-2">Tamper-Evident Verification</h2>
+          <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-line dark:border-line shadow-sm">
+            <h2 className="text-lg font-bold mb-4 dark:text-white border-b border-line dark:border-line pb-2">Tamper-Evident Verification</h2>
             <ThreeLayerVerification result={integrity ?? undefined} isLoading={!integrity} />
           </div>
 
-          <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-red-900/40 dark:border-red-900/40 shadow-sm">
-            <h2 className="text-lg font-bold mb-4 dark:text-white border-b border-red-900/40 dark:border-red-900/40 pb-2">Chain of Custody</h2>
+          <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-line dark:border-line shadow-sm">
+            <h2 className="text-lg font-bold mb-4 dark:text-white border-b border-line dark:border-line pb-2">Chain of Custody</h2>
             <EvidenceTimeline transfers={timeline} />
           </div>
         </div>
 
         <div className="space-y-6">
-          <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-red-900/40 dark:border-red-900/40 shadow-sm flex flex-col items-center justify-center">
+          <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-line dark:border-line shadow-sm flex flex-col items-center justify-center">
             <h3 className="font-bold mb-4 dark:text-white">Integrity Score</h3>
             <IntegrityScoreRing score={evidence.integrityScore} size={160} />
             <p className="text-xs text-center text-neutral-500 mt-4">Calculated across 3 storage layers</p>
           </div>
 
-          <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-red-900/40 dark:border-red-900/40 shadow-sm">
+          <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-line dark:border-line shadow-sm">
             <h3 className="font-bold mb-4 dark:text-white">Crypto Anchors</h3>
             <div className="space-y-4">
               <div>
                 <p className="text-xs text-neutral-500 mb-1">SHA-256 Hash</p>
-                <p className="text-xs font-mono break-all bg-[#0a0a0a] dark:bg-[#111111] p-2 rounded text-neutral-200 dark:text-neutral-300 border border-red-900/40 dark:border-red-900/40">{evidence.sha256Hash}</p>
+                <p className="text-xs font-mono break-all bg-[#0a0a0a] dark:bg-[#111111] p-2 rounded text-neutral-200 dark:text-neutral-300 border border-line dark:border-line">{evidence.sha256Hash}</p>
               </div>
               <div>
                 <p className="text-xs text-neutral-500 mb-1">IPFS CID</p>
-                <p className="text-xs font-mono break-all bg-[#0a0a0a] dark:bg-[#111111] p-2 rounded text-neutral-200 dark:text-neutral-300 border border-red-900/40 dark:border-red-900/40">{evidence.ipfsCid}</p>
+                <p className="text-xs font-mono break-all bg-[#0a0a0a] dark:bg-[#111111] p-2 rounded text-neutral-200 dark:text-neutral-300 border border-line dark:border-line">{evidence.ipfsCid}</p>
               </div>
               <div>
                 <p className="text-xs text-neutral-500 mb-1">Blockchain Sync</p>
