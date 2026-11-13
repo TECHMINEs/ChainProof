@@ -55,7 +55,7 @@ function NewCaseModal({ onClose, onCreated }: { onClose: () => void; onCreated: 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className="w-full max-w-lg card border-red-900/40 shadow-void max-h-[90vh] overflow-y-auto">
+      <div className="w-full max-w-lg card border-line shadow-void max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-lg font-bold text-white">Open New Case</h2>
           <button onClick={onClose} className="text-neutral-500 hover:text-white transition-colors text-xl leading-none">&times;</button>

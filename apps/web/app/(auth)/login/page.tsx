@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { startAuthentication } from '@simplewebauthn/browser'
+import Image from 'next/image'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -91,24 +92,17 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex-1 bg-black flex items-center justify-center p-4 grid-bg">
-      {/* Background glow */}
-      <div className="absolute inset-0 bg-radial-brand pointer-events-none" />
+    <div className="flex-1 flex items-center justify-center p-4">
 
       <div className="w-full max-w-sm relative animate-glow-in">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto mb-4 relative">
-            <div className="absolute inset-0 bg-brand-500 rounded-xl opacity-20 blur-xl animate-pulse-neon" />
-            <div className="relative w-16 h-16 bg-void-100 border border-brand-500/50 rounded-xl flex items-center justify-center shadow-neon">
-              <span className="text-brand-500 text-2xl font-black">C</span>
-            </div>
-          </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">ChainProof</h1>
-          <p className="text-neutral-500 text-sm mt-1">Forensic Chain of Custody</p>
+          <Image src="/logo-mark.svg" alt="ChainProof logo" width={72} height={72} className="w-[72px] h-[72px] mx-auto mb-4" unoptimized priority />
+          <h1 className="text-4xl font-bold text-white uppercase">Chain<span className="text-[#FF2626]">Proof</span></h1>
+          <p className="tm-label mt-2">Forensic chain of custody</p>
         </div>
 
-        <div className="card border-red-900/40">
+        <div className="card border-line">
           {error && (
             <div className="mb-5 p-3 rounded-lg bg-brand-500/10 border border-brand-500/30 text-brand-400 text-sm flex items-center gap-2">
               <span>⚠</span> {error}

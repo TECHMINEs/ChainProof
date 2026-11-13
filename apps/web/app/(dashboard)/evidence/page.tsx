@@ -104,7 +104,7 @@ export default function EvidenceListPage() {
                   <td className="table-td"><span className="badge badge-gray">{e.type}</span></td>
                   <td className="table-td"><span className={`badge ${statusStyle[e.status] || 'badge-gray'}`}>{e.status}</span></td>
                   <td className="table-td">
-                    <span className={`font-bold text-sm ${e.integrityScore === 100 ? 'text-emerald-400' : 'text-brand-400'}`}>
+                    <span className={`font-bold text-sm ${e.integrityScore === 100 ? 'text-green-400' : 'text-brand-400'}`}>
                       {e.integrityScore}/100
                     </span>
                   </td>

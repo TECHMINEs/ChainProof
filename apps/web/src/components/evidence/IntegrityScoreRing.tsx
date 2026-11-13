@@ -12,7 +12,7 @@ export function IntegrityScoreRing({ score, size = 100 }: IntegrityScoreRingProp
   const strokeDashoffset = circumference - (score / 100) * circumference;
 
   let color = 'text-green-500';
-  if (score < 100 && score >= 66) color = 'text-yellow-500';
+  if (score < 100 && score >= 66) color = 'text-white';
   else if (score < 66) color = 'text-red-500';
 
   return (

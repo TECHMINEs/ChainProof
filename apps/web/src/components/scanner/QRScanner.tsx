@@ -57,17 +57,17 @@ export function QRScanner({ onScan }: QRScannerProps) {
   return (
     <div className="space-y-4">
       {cameraError ? (
-        <div className="p-4 bg-red-900/20 border border-red-800/50 rounded text-red-400 text-sm text-center">
+        <div className="p-4 bg-red-900/20 border border-line rounded text-red-400 text-sm text-center">
           {cameraError}
         </div>
       ) : (
         <div
           id={containerId}
-          className="w-full rounded-lg overflow-hidden border border-red-900/40"
+          className="w-full rounded-lg overflow-hidden border border-line"
         />
       )}
 
-      <div className="pt-4 border-t border-red-900/40">
+      <div className="pt-4 border-t border-line">
         <p className="text-xs text-neutral-500 mb-3 text-center">Or enter evidence number manually</p>
         <form onSubmit={handleManualSubmit} className="flex gap-2">
           <input
@@ -75,7 +75,7 @@ export function QRScanner({ onScan }: QRScannerProps) {
             value={manualInput}
             onChange={e => setManualInput(e.target.value)}
             placeholder="e.g. EV-2026-000042"
-            className="flex-1 px-3 py-2 bg-[#050505] border border-red-900/40 rounded text-white text-sm placeholder-neutral-500 focus:outline-none focus:border-red-500"
+            className="flex-1 px-3 py-2 bg-[#050505] border border-line rounded text-white text-sm placeholder-neutral-500 focus:outline-none focus:border-red-500"
           />
           <button
             type="submit"

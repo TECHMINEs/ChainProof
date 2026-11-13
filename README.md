@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="apps/web/public/techmines-logo.jpg" alt="TECHMINES" width="96" />
+<a href="https://techmines.github.io/"><img src="apps/web/public/logo-lockup.svg" alt="ChainProof by TECHMINES" height="84" /></a>
 
 # ChainProof
 

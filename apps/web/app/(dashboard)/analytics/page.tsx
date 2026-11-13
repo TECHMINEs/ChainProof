@@ -5,10 +5,10 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from 'recharts'
 import ErrorBoundary from '@/components/ErrorBoundary'
-import CustomTooltip from '@/components/charts/PlasmaTooltip'
+import CustomTooltip from '@/components/charts/ChartTooltip'
 import type { AnalyticsOverview, TransfersByDayEntry, EvidenceByTypeEntry, OfficerActivity, AnomalyEntry } from '@chainproof/types'
 
-const COLORS = ['#FF0000', '#ff6b6b', '#ff9e9e', '#FF5F1F', '#00FFFF', '#39FF14']
+const COLORS = ['#FF2626', '#ff6b6b', '#ff9e9e', '#A9A9A9', '#FFFFFF', '#39FF14']
 
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -51,7 +51,7 @@ export default function AnalyticsPage() {
     return (
       <div className="space-y-6 animate-pulse">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="h-72 bg-void-100 rounded-xl border border-red-900/40" />
+          <div key={i} className="h-72 bg-void-100 rounded-xl border border-line" />
         ))}
       </div>
     )
@@ -103,7 +103,7 @@ export default function AnalyticsPage() {
                   <XAxis dataKey="date" tick={{ fill: '#555', fontSize: 11 }} />
                   <YAxis tick={{ fill: '#555', fontSize: 11 }} allowDecimals={false} />
                   <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="count" name="Transfers" fill="#FF0000" radius={0}
+                  <Bar dataKey="count" name="Transfers" fill="#FF2626" radius={0}
                     style={{ filter: 'drop-shadow(0 0 6px rgba(255,0,60,0.5))' }} />
                 </BarChart>
               </ResponsiveContainer>
@@ -136,7 +136,7 @@ export default function AnalyticsPage() {
             <div className="overflow-x-auto">
               <table className="min-w-full text-sm">
                 <thead>
-                  <tr className="border-b border-red-900/40">
+                  <tr className="border-b border-line">
                     <th className="table-th text-left">Officer</th>
                     <th className="table-th text-left">Department</th>
                     <th className="table-th text-right">Transfers Initiated</th>
@@ -173,7 +173,7 @@ export default function AnalyticsPage() {
                     <span className="text-neutral-500 text-xs ml-3">{a.status}</span>
                   </div>
                   <div className="flex items-center gap-4 text-xs">
-                    <span className={`font-bold ${a.integrityScore < 66 ? 'text-brand-400' : 'text-yellow-400'}`}>
+                    <span className={`font-bold ${a.integrityScore < 66 ? 'text-brand-400' : 'text-white'}`}>
                       Score: {a.integrityScore}/100
                     </span>
                     <span className="text-neutral-400">{a.transferCount} transfers</span>

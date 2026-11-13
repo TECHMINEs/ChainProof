@@ -125,10 +125,10 @@ export default function RegisterEvidencePage() {
           </div>
 
           {/* D2: GPS coordinates display */}
-          <div className="p-3 bg-void-200 border border-red-900/40 rounded-lg text-xs">
+          <div className="p-3 bg-void-200 border border-line rounded-lg text-xs">
             <p className="label mb-1">GPS Coordinates</p>
             {coords ? (
-              <p className="font-mono text-emerald-400">
+              <p className="font-mono text-green-400">
                 {coords.lat.toFixed(6)}, {coords.lng.toFixed(6)}
                 <span className="text-neutral-400 ml-2">— captured from device</span>
               </p>

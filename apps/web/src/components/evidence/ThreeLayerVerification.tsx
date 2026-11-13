@@ -25,7 +25,7 @@ export function ThreeLayerVerification({ result, isLoading }: ThreeLayerVerifica
       </div>
 
       {/* IPFS Layer */}
-      <div className={`p-4 rounded-lg border ${!result.ipfsStatus.checked ? 'border-red-900/40 dark:border-red-900/40' : result.ipfsStatus.matches ? 'border-green-500 bg-green-950/40 dark:bg-green-900/20' : 'border-red-500 bg-red-950/40 dark:bg-red-900/20'}`}>
+      <div className={`p-4 rounded-lg border ${!result.ipfsStatus.checked ? 'border-line dark:border-line' : result.ipfsStatus.matches ? 'border-green-500 bg-green-950/40 dark:bg-green-900/20' : 'border-red-500 bg-red-950/40 dark:bg-red-900/20'}`}>
         <h3 className="font-bold mb-2 dark:text-white flex items-center">
           <span className="mr-2">{!result.ipfsStatus.checked ? '⏳' : result.ipfsStatus.matches ? '✅' : '❌'}</span>
           IPFS Layer
@@ -34,7 +34,7 @@ export function ThreeLayerVerification({ result, isLoading }: ThreeLayerVerifica
       </div>
 
       {/* Contract Layer */}
-      <div className={`p-4 rounded-lg border ${!result.chainStatus.checked ? 'border-red-900/40 dark:border-red-900/40' : result.chainStatus.matches ? 'border-green-500 bg-green-950/40 dark:bg-green-900/20' : 'border-red-500 bg-red-950/40 dark:bg-red-900/20'}`}>
+      <div className={`p-4 rounded-lg border ${!result.chainStatus.checked ? 'border-line dark:border-line' : result.chainStatus.matches ? 'border-green-500 bg-green-950/40 dark:bg-green-900/20' : 'border-red-500 bg-red-950/40 dark:bg-red-900/20'}`}>
         <h3 className="font-bold mb-2 dark:text-white flex items-center">
           <span className="mr-2">{!result.chainStatus.checked ? '⏳' : result.chainStatus.matches ? '✅' : '❌'}</span>
           Blockchain Layer
