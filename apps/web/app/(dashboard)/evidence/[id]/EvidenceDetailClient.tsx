@@ -9,6 +9,10 @@ import { EvidenceStatusBadge } from '@/components/ui/EvidenceStatusBadge'
 import type { Evidence, Transfer, IntegrityVerificationResult } from '@chainproof/types'
 import Image from 'next/image'
 
+const displayDate = (value?: string) => value && !Number.isNaN(Date.parse(value))
+  ? new Date(value).toLocaleString()
+  : '—'
+
 export default function EvidenceDetailsPage() {
   const { id } = useParams()
   const [evidence, setEvidence] = useState<Evidence | null>(null)
@@ -24,7 +28,7 @@ export default function EvidenceDetailsPage() {
     ]).then(([evData, tlData, intData]) => {
       if(evData.data) setEvidence(evData.data)
       if(tlData.data) setTimeline(tlData.data)
-      if(!intData.error) setIntegrity(intData)
+      if(!intData.error && intData.dbStatus && intData.ipfsStatus && intData.chainStatus) setIntegrity(intData)
       setLoading(false)
     }).catch(() => setLoading(false))
   }, [id])
@@ -37,7 +41,7 @@ export default function EvidenceDetailsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold dark:text-white font-mono">{evidence.evidenceNumber}</h1>
-          <p className="text-neutral-500 mt-1">Case: {evidence.case?.caseNumber}</p>
+          <p className="text-neutral-500 mt-1">Case: {evidence.case?.caseNumber || '—'}</p>
         </div>
         <EvidenceStatusBadge status={evidence.status} />
       </div>
@@ -50,11 +54,11 @@ export default function EvidenceDetailsPage() {
             <div className="grid grid-cols-2 gap-4 mt-4 text-sm">
               <div>
                 <span className="text-neutral-500">Collection Date:</span>
-                <p className="font-medium dark:text-white">{new Date(evidence.collectionDate).toLocaleString()}</p>
+                <p className="font-medium dark:text-white">{displayDate(evidence.collectionDate)}</p>
               </div>
               <div>
                 <span className="text-neutral-500">Location:</span>
-                <p className="font-medium dark:text-white">{evidence.collectionLocation}</p>
+                <p className="font-medium dark:text-white">{evidence.collectionLocation || '—'}</p>
               </div>
             </div>
             {evidence.imageUrls?.[0] && (
@@ -70,7 +74,7 @@ export default function EvidenceDetailsPage() {
 
           <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-line dark:border-line shadow-sm">
             <h2 className="text-lg font-bold mb-4 dark:text-white border-b border-line dark:border-line pb-2">Tamper-Evident Verification</h2>
-            <ThreeLayerVerification result={integrity ?? undefined} isLoading={!integrity} />
+            <ThreeLayerVerification result={integrity ?? undefined} />
           </div>
 
           <div className="bg-black dark:bg-[#050505] rounded-xl p-6 border border-line dark:border-line shadow-sm">
@@ -91,11 +95,11 @@ export default function EvidenceDetailsPage() {
             <div className="space-y-4">
               <div>
                 <p className="text-xs text-neutral-500 mb-1">SHA-256 Hash</p>
-                <p className="text-xs font-mono break-all bg-[#0a0a0a] dark:bg-[#111111] p-2 rounded text-neutral-200 dark:text-neutral-300 border border-line dark:border-line">{evidence.sha256Hash}</p>
+                <p className="text-xs font-mono break-all bg-[#0a0a0a] dark:bg-[#111111] p-2 rounded text-neutral-200 dark:text-neutral-300 border border-line dark:border-line">{evidence.sha256Hash || '—'}</p>
               </div>
               <div>
                 <p className="text-xs text-neutral-500 mb-1">IPFS CID</p>
-                <p className="text-xs font-mono break-all bg-[#0a0a0a] dark:bg-[#111111] p-2 rounded text-neutral-200 dark:text-neutral-300 border border-line dark:border-line">{evidence.ipfsCid}</p>
+                <p className="text-xs font-mono break-all bg-[#0a0a0a] dark:bg-[#111111] p-2 rounded text-neutral-200 dark:text-neutral-300 border border-line dark:border-line">{evidence.ipfsCid || '—'}</p>
               </div>
               <div>
                 <p className="text-xs text-neutral-500 mb-1">Blockchain Sync</p>

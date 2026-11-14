@@ -16,6 +16,10 @@ const statusStyle: Record<string, string> = {
   ARCHIVED: 'badge-gray',
 }
 
+const displayDate = (value?: string) => value && !Number.isNaN(Date.parse(value))
+  ? new Date(value).toLocaleDateString()
+  : '—'
+
 export default function EvidenceListPage() {
   const [evidence, setEvidence] = useState<Evidence[]>([])
   const [total, setTotal] = useState(0)
@@ -35,7 +39,10 @@ export default function EvidenceListPage() {
     if (type) params.set('type', type)
 
     fetch(`/api/evidence?${params}`).then(r => r.json()).then(d => {
-      if (d.evidence) { setEvidence(d.evidence); setTotal(d.total) }
+      if (Array.isArray(d.evidence)) {
+        setEvidence(d.evidence)
+        setTotal(typeof d.total === 'number' ? d.total : d.evidence.length)
+      }
       setLoading(false)
     }).catch(() => setLoading(false))
   }, [page, submittedSearch, status, type])
@@ -108,8 +115,8 @@ export default function EvidenceListPage() {
                       {e.integrityScore}/100
                     </span>
                   </td>
-                  <td className="table-td font-mono text-xs text-neutral-500">{e.case?.caseNumber}</td>
-                  <td className="table-td text-xs text-neutral-500">{new Date(e.createdAt).toLocaleDateString()}</td>
+                  <td className="table-td font-mono text-xs text-neutral-500">{e.case?.caseNumber || '—'}</td>
+                  <td className="table-td text-xs text-neutral-500">{displayDate(e.createdAt)}</td>
                 </tr>
               ))}
             </tbody>

@@ -1,4 +1,4 @@
-import { sampleEvidence, sampleCases, sampleTransfers, sampleAnalytics } from './demoData';
+import { sampleEvidence, sampleCases, sampleTransfers, sampleAnalytics, sampleIntegrityResult } from './demoData';
 
 export function setupDemoInterceptor() {
   if (typeof window === 'undefined') return;
@@ -54,26 +54,34 @@ export function setupDemoInterceptor() {
       }
 
       if (path === '/api/evidence' || path === '/api/evidence/') {
-        return mockJson({ evidence: sampleEvidence });
+        const page = Math.max(1, Number(url.searchParams.get('page')) || 1);
+        const pageSize = Math.max(1, Number(url.searchParams.get('pageSize')) || 10);
+        const search = url.searchParams.get('search')?.trim().toLowerCase();
+        const status = url.searchParams.get('status');
+        const type = url.searchParams.get('type');
+        const filtered = sampleEvidence.filter((e) =>
+          (!search || e.evidenceNumber.toLowerCase().includes(search) || e.description.toLowerCase().includes(search)) &&
+          (!status || e.status === status) &&
+          (!type || e.type === type)
+        );
+        return mockJson({ evidence: filtered.slice((page - 1) * pageSize, page * pageSize), total: filtered.length, page, pageSize });
       }
 
       if (path.includes('/verify-integrity')) {
-        return mockJson({
-          status: 'VALID',
-          score: 100,
-          merkleRoot: '0x8f4b9e2c1a0d3f5b7e9a8c6d4e2f0b1a3c5d7e9f',
-          onChainTx: '0x9a8c2f1e4b5d6c7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a',
-        });
+        const id = path.split('/')[3];
+        const evidence = sampleEvidence.find((e) => e.id === id);
+        return evidence ? mockJson(sampleIntegrityResult(evidence)) : mockJson({ error: 'Evidence not found' }, 404);
       }
 
       if (path.includes('/timeline')) {
-        return mockJson({ data: sampleTransfers });
+        const id = path.split('/')[3];
+        return mockJson({ data: sampleTransfers.filter((t) => t.evidenceId === id) });
       }
 
       if (path.startsWith('/api/evidence/')) {
         const id = path.split('/')[3];
-        const ev = sampleEvidence.find((e) => e.id === id) || sampleEvidence[0];
-        return mockJson({ data: ev });
+        const ev = sampleEvidence.find((e) => e.id === id);
+        return ev ? mockJson({ data: ev }) : mockJson({ error: 'Evidence not found' }, 404);
       }
 
       if (path.startsWith('/api/cases/')) {

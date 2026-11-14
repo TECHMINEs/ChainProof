@@ -1,4 +1,11 @@
-export const sampleEvidence = [
+import type { Evidence, Transfer, IntegrityVerificationResult } from '@chainproof/types';
+
+const caseSummaries = {
+  'CASE-2026-089': { id: 'CASE-2026-089', caseNumber: 'CASE-2026-089', title: 'Operation Cipherlock — Financial Cyberforensics', status: 'ACTIVE' },
+  'CASE-2026-104': { id: 'CASE-2026-104', caseNumber: 'CASE-2026-104', title: 'State vs. Ledger Systems — Asset Verification', status: 'PENDING_TRIAL' },
+};
+
+const evidenceFixtures = [
   {
     id: 'EV-2026-001',
     evidenceNumber: 'EV-2026-001',
@@ -6,7 +13,7 @@ export const sampleEvidence = [
     caseId: 'CASE-2026-089',
     type: 'DIGITAL',
     description: 'Encrypted NVMe SSD (1TB) seized from primary suspect workstation. SHA-256 hashed on seizure.',
-    status: 'IN_CUSTODY',
+    status: 'STORED',
     currentHolder: 'System Administrator (DFU-001)',
     currentHolderId: 'ADMIN-001',
     integrityScore: 100,
@@ -42,7 +49,7 @@ export const sampleEvidence = [
     caseId: 'CASE-2026-104',
     type: 'DOCUMENT',
     description: 'Ledger documents with verified cryptographic signature stamps.',
-    status: 'ANALYZED',
+    status: 'VERIFIED',
     currentHolder: 'Forensics Lab Examiner K. Sharma',
     currentHolderId: 'EXAMINER-002',
     integrityScore: 100,
@@ -54,6 +61,28 @@ export const sampleEvidence = [
     txHash: '0x1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d',
   },
 ];
+
+export const sampleEvidence: Evidence[] = evidenceFixtures.map((item) => ({
+  id: item.id,
+  evidenceNumber: item.evidenceNumber,
+  caseId: item.caseId,
+  case: caseSummaries[item.caseId as keyof typeof caseSummaries],
+  registrarId: 'ADMIN-001',
+  type: item.type as Evidence['type'],
+  status: item.status as Evidence['status'],
+  description: item.description,
+  quantity: 1,
+  collectionDate: item.collectedAt,
+  collectionLocation: item.location,
+  storageLocation: item.location,
+  imageUrls: [],
+  sha256Hash: item.sha256Hash,
+  integrityScore: item.integrityScore,
+  tags: [],
+  chainSyncStatus: 'PENDING',
+  createdAt: item.collectedAt,
+  updatedAt: item.collectedAt,
+}));
 
 export const sampleCases = [
   {
@@ -80,7 +109,7 @@ export const sampleCases = [
   },
 ];
 
-export const sampleTransfers = [
+const transferFixtures = [
   {
     id: 'TR-2026-441',
     evidenceId: 'EV-2026-001',
@@ -90,7 +119,7 @@ export const sampleTransfers = [
     fromUserId: 'OFFICER-003',
     toUserId: 'ADMIN-001',
     purpose: 'Digital Forensics Imaging & Bitstream Analysis',
-    status: 'ACCEPTED',
+    status: 'COMPLETED',
     timestamp: '2026-11-10T16:00:00Z',
     txHash: '0x8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a9f8e7d',
   },
@@ -103,11 +132,43 @@ export const sampleTransfers = [
     fromUserId: 'OFFICER-004',
     toUserId: 'CUSTODIAN-001',
     purpose: 'Secure transit to ballistic and hardware forensics division',
-    status: 'IN_TRANSIT',
+    status: 'PENDING',
     timestamp: '2026-11-12T11:15:00Z',
     txHash: '0x3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b',
   },
 ];
+
+const userNames: Record<string, string> = {
+  'OFFICER-003': 'Det. M. Vance',
+  'OFFICER-004': 'Officer R. Miller',
+  'ADMIN-001': 'System Administrator',
+  'CUSTODIAN-001': 'Central Lab Custodian',
+};
+
+export const sampleTransfers: Transfer[] = transferFixtures.map((item) => ({
+  id: item.id,
+  evidenceId: item.evidenceId,
+  evidence: sampleEvidence.find((e) => e.id === item.evidenceId),
+  fromUserId: item.fromUserId,
+  fromUser: { id: item.fromUserId, name: userNames[item.fromUserId], employeeId: item.fromUserId, role: 'OFFICER', department: 'Forensics' },
+  toUserId: item.toUserId,
+  toUser: { id: item.toUserId, name: userNames[item.toUserId], employeeId: item.toUserId, role: item.toUserId === 'ADMIN-001' ? 'ADMIN' : 'OFFICER', department: 'Forensics' },
+  purpose: item.purpose,
+  status: item.status as Transfer['status'],
+  transferredAt: item.timestamp,
+}));
+
+export function sampleIntegrityResult(evidence: Evidence): IntegrityVerificationResult {
+  return {
+    evidenceId: evidence.id,
+    dbStatus: { checked: true, hash: evidence.sha256Hash, matches: true },
+    ipfsStatus: { checked: false, matches: false },
+    chainStatus: { checked: false, matches: false },
+    integrityScore: evidence.integrityScore,
+    discrepancies: [],
+    verifiedAt: evidence.updatedAt,
+  };
+}
 
 export const sampleAnalytics = {
   overview: {
