@@ -8,6 +8,9 @@ const withPWA = require('next-pwa')({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'export',
+  basePath: '/ChainProof',
+  images: { unoptimized: true },
   images: {
     // Evidence photos are stored on Cloudinary
     remotePatterns: [{ protocol: 'https', hostname: 'res.cloudinary.com' }],

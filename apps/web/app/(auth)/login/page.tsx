@@ -97,7 +97,18 @@ export default function LoginPage() {
       <div className="w-full max-w-sm relative animate-glow-in">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Image src="/logo-mark.svg" alt="ChainProof logo" width={72} height={72} className="w-[72px] h-[72px] mx-auto mb-4" unoptimized priority />
+          <img
+            src="/ChainProof/logo-mark.svg"
+            alt="ChainProof logo"
+            width={72}
+            height={72}
+            className="w-[72px] h-[72px] mx-auto mb-4"
+            onError={(e) => {
+              if (e.currentTarget.src.includes('/ChainProof/logo-mark.svg')) {
+                e.currentTarget.src = '/logo-mark.svg';
+              }
+            }}
+          />
           <h1 className="text-4xl font-bold text-white uppercase">Chain<span className="text-[#FF2626]">Proof</span></h1>
           <p className="tm-label mt-2">Forensic chain of custody</p>
         </div>

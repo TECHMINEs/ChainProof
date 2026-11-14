@@ -73,7 +73,18 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
 
 const Logo = () => (
   <div className="flex items-center gap-3">
-    <Image src="/logo-mark.svg" alt="ChainProof logo" width={40} height={40} className="w-10 h-10 flex-shrink-0" unoptimized />
+    <img
+      src="/ChainProof/logo-mark.svg"
+      alt="ChainProof logo"
+      width={40}
+      height={40}
+      className="w-10 h-10 flex-shrink-0"
+      onError={(e) => {
+        if (e.currentTarget.src.includes('/ChainProof/logo-mark.svg')) {
+          e.currentTarget.src = '/logo-mark.svg';
+        }
+      }}
+    />
     <div className="grid leading-none">
       <span className="font-display font-bold text-xl tracking-[0.03em] text-white uppercase">Chain<span className="text-[#FF2626]">Proof</span></span>
       <span className="mt-1 text-[10px] font-mono font-bold tracking-[0.22em] text-[#FF2626] uppercase">By TECHMINES</span>
@@ -86,7 +97,7 @@ const SidebarFooter = () => (
     <div className="flex items-center justify-between px-1">
       <div className="flex items-center gap-2">
         <div className="w-2 h-2 bg-[#39FF14] shadow-[0_0_6px_#39FF14]" />
-        <span className="text-[11px] font-mono text-neutral-400">Polygon Active</span>
+        <span className="text-[11px] font-mono text-neutral-400">Polygon (Simulated)</span>
       </div>
       <span className="text-[10px] font-mono text-white">v1.0.0</span>
     </div>

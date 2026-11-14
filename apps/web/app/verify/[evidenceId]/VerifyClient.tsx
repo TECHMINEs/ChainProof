@@ -28,7 +28,18 @@ export default function VerificationPortalPage() {
     <div className="flex-1 text-white flex flex-col items-center justify-center p-4">
       <div className="tm-card w-full max-w-2xl overflow-hidden">
         <div className="p-8 text-center bg-[#050505] border-b border-line">
-          <Image src="/logo-mark.svg" alt="ChainProof logo" width={64} height={64} className="w-16 h-16 mx-auto mb-4" unoptimized />
+          <img
+            src="/ChainProof/logo-mark.svg"
+            alt="ChainProof logo"
+            width={64}
+            height={64}
+            className="w-16 h-16 mx-auto mb-4"
+            onError={(e) => {
+              if (e.currentTarget.src.includes('/ChainProof/logo-mark.svg')) {
+                e.currentTarget.src = '/logo-mark.svg';
+              }
+            }}
+          />
           <h1 className="text-3xl font-bold tracking-tight">ChainProof Verification Portal</h1>
           <p className="text-neutral-400 mt-2">Public Chain of Custody Validation</p>
         </div>

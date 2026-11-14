@@ -59,7 +59,11 @@ export default function EvidenceDetailsPage() {
             </div>
             {evidence.imageUrls?.[0] && (
               <div className="mt-6">
-                <Image src={evidence.imageUrls[0]} alt={`Evidence photo for ${evidence.evidenceNumber}`} width={512} height={256} className="max-h-64 w-auto object-cover border border-line" />
+                <img
+                  src={evidence.imageUrls[0]}
+                  alt={`Evidence photo for ${evidence.evidenceNumber}`}
+                  className="max-h-64 w-auto object-cover border border-line"
+                />
               </div>
             )}
           </div>

@@ -1,4 +1,5 @@
-import Image from 'next/image'
+'use client'
+import React from 'react'
 
 export default function BrandBar({ project }: { project: string }) {
   return (
@@ -11,13 +12,17 @@ export default function BrandBar({ project }: { project: string }) {
           className="group flex items-center gap-2.5 min-w-0 no-underline"
           aria-label="TECHMINES — Pranav Jangid's portfolio"
         >
-          <Image
-            src="/techmines-logo.jpg"
+          <img
+            src="/ChainProof/techmines-logo.jpg"
             alt="TECHMINES logo"
             width={28}
             height={28}
-            priority
             className="w-7 h-7 object-cover border-2 border-[#FF2626] transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105"
+            onError={(e) => {
+              if (e.currentTarget.src.includes('/ChainProof/techmines-logo.jpg')) {
+                e.currentTarget.src = '/techmines-logo.jpg';
+              }
+            }}
           />
           <span className="font-display font-bold uppercase tracking-[0.03em] text-base text-white">
             TECHMINES
