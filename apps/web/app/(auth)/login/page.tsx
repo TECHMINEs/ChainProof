@@ -177,6 +177,23 @@ export default function LoginPage() {
               </span>
             )}
           </button>
+
+          <div className="mt-5 pt-4 border-t border-line">
+            <button
+              type="button"
+              onClick={() => {
+                setEmployeeId('ADMIN-001');
+                setPassword('admin-password-2026');
+                router.push('/dashboard');
+              }}
+              className="w-full py-2.5 px-3 text-xs font-mono uppercase tracking-wider bg-brand-500/10 text-[#FF2626] border border-brand-500/30 hover:bg-brand-500/20 transition-colors rounded font-semibold flex items-center justify-center gap-2 cursor-pointer"
+            >
+              ✦ Quick Demo Access (Admin)
+            </button>
+            <p className="text-[11px] text-center text-neutral-400 mt-2 font-mono">
+              Client-side interactive demo with bundled custody data
+            </p>
+          </div>
         </div>
 
         <p className="text-center text-neutral-200 text-xs mt-6">
