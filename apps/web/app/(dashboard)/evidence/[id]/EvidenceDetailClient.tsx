@@ -7,7 +7,6 @@ import { ThreeLayerVerification } from '@/components/evidence/ThreeLayerVerifica
 import { BlockchainStatusBadge } from '@/components/blockchain/BlockchainStatusBadge'
 import { EvidenceStatusBadge } from '@/components/ui/EvidenceStatusBadge'
 import type { Evidence, Transfer, IntegrityVerificationResult } from '@chainproof/types'
-import Image from 'next/image'
 
 const displayDate = (value?: string) => value && !Number.isNaN(Date.parse(value))
   ? new Date(value).toLocaleString()

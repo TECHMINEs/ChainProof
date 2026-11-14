@@ -1,13 +1,25 @@
 import './globals.css'
 import type { Metadata, Viewport } from 'next'
-import { Chakra_Petch, IBM_Plex_Sans, JetBrains_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import BrandBar from '@/components/brand/BrandBar'
 import BrandFooter from '@/components/brand/BrandFooter'
 import DemoInitializer from '@/components/DemoInitializer'
 
-const fontDisplay = Chakra_Petch({ subsets: ['latin'], weight: ['500', '600', '700'], variable: '--font-chakra', display: 'swap' })
-const fontBody = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--font-plex', display: 'swap' })
-const fontMono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500', '700'], variable: '--font-jetbrains', display: 'swap' })
+const fontDisplay = localFont({ src: [
+  { path: './fonts/chakra-500.ttf', weight: '500' },
+  { path: './fonts/chakra-600.ttf', weight: '600' },
+  { path: './fonts/chakra-700.ttf', weight: '700' },
+], variable: '--font-chakra', display: 'swap' })
+const fontBody = localFont({ src: [
+  { path: './fonts/plex-400.ttf', weight: '400' },
+  { path: './fonts/plex-500.ttf', weight: '500' },
+  { path: './fonts/plex-600.ttf', weight: '600' },
+], variable: '--font-plex', display: 'swap' })
+const fontMono = localFont({ src: [
+  { path: './fonts/jetbrains-400.ttf', weight: '400' },
+  { path: './fonts/jetbrains-500.ttf', weight: '500' },
+  { path: './fonts/jetbrains-700.ttf', weight: '700' },
+], variable: '--font-jetbrains', display: 'swap' })
 const fontVariables = `${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable}`
 
 export const metadata: Metadata = {

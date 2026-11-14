@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import Image from 'next/image'
 import type { PublicVerificationResult } from '@chainproof/types'
 
 export default function VerificationPortalPage() {

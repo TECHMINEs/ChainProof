@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { startAuthentication } from '@simplewebauthn/browser'
-import Image from 'next/image'
 
 export default function LoginPage() {
   const router = useRouter()
