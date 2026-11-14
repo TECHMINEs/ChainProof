@@ -41,5 +41,5 @@ jobs:
         working-directory: apps/web
       - run: npx tsc --noEmit -p .
         working-directory: apps/web
-      - run: npx next build
+      - run: node build-pages.js
         working-directory: apps/web
