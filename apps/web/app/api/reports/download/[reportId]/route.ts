@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth/session';
 import { serverError } from '@/lib/http/errors';
 
-export async function GET(request: Request, { params }: { params: { reportId: string } }) {
+export async function GET(_req: Request, { params }: { params: { reportId: string } }) {
   try {
     const session = await getSession();
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

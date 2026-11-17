@@ -22,7 +22,6 @@ describe("ChainOfCustody", function () {
     chainOfCustody = await ChainOfCustodyFactory.deploy(accessControlAddress);
     await chainOfCustody.waitForDeployment();
 
-    // Assign roles
     await accessControl.addRegistrar(registrar.address);
     await accessControl.addOfficer(officer1.address);
     await accessControl.addOfficer(officer2.address);
@@ -62,12 +61,9 @@ describe("ChainOfCustody", function () {
   });
 
   it("should verify a correct Merkle proof", async function () {
-    // Replicating the inline verifyMerkleProof sorting logic:
-    // Sort pair before hashing. 
-    // Wait, let's just test it with manual proof creation in JS.
+    // Pairs are sorted before hashing, matching verifyMerkleProof in the contract.
     const leaves = ["Leaf1", "Leaf2", "Leaf3", "Leaf4"].map(l => ethers.keccak256(ethers.toUtf8Bytes(l)));
     
-    // Simple tree creation for 4 leaves
     const hashPair = (a: string, b: string) => {
       const [smaller, larger] = [a, b].sort();
       return ethers.keccak256(ethers.concat([smaller, larger]));

@@ -63,7 +63,6 @@ export async function POST(request: Request, { params }: { params: { id: string 
     );
     const receipt = await tx.wait();
 
-    // 4. Update database record
     const updated = await prisma.transfer.update({
       where: { id: params.id },
       data: {

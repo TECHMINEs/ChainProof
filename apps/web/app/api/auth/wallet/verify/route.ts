@@ -18,7 +18,6 @@ export async function POST(request: Request) {
     const body = await request.json();
     const data = verifySchema.parse(body);
 
-    // A8: Retrieve the server-generated nonce from Redis
     const nonceKey = `wallet_nonce:${session.user.id}`;
     const storedNonce = await redis.get(nonceKey);
     if (!storedNonce) {
@@ -32,10 +31,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Signature verification failed' }, { status: 401 });
     }
 
-    // Delete nonce after use (one-time)
+    // Nonces are single use.
     await redis.del(nonceKey);
 
-    // B12: Check the wallet isn't already linked to a different account
+    // A wallet can belong to one account only.
     const existingUser = await prisma.user.findFirst({
       where: {
         walletAddress: { equals: data.address, mode: 'insensitive' },

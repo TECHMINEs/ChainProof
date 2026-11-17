@@ -36,13 +36,11 @@ export async function POST(request: Request, { params }: { params: { id: string 
       }
     });
 
-    // Revert evidence status
     await prisma.evidence.update({
       where: { id: transfer.evidenceId },
       data: { status: 'STORED' }
     });
 
-    // Notify sender
     await prisma.notification.create({
       data: {
         userId: transfer.fromUserId,

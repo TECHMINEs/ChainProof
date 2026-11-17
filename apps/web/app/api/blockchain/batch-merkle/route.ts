@@ -13,7 +13,6 @@ export async function POST() {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    // Find unsynced completed transfers
     const unsyncedTransfers = await prisma.transfer.findMany({
       where: {
         status: 'COMPLETED',
@@ -26,14 +25,11 @@ export async function POST() {
       return NextResponse.json({ message: 'No unsynced transfers found' });
     }
 
-    // Prepare leaves
-    // Leaf data: combinedDataHash
     const leaves = unsyncedTransfers.map(t => t.combinedDataHash || 'empty');
     const tree = new MerkleTree(leaves);
     const root = tree.getRoot();
     const batchId = `BATCH-${Date.now()}`;
 
-    // Call contract
     let txHash = '';
     let blockNumber = 0;
     try {
@@ -46,7 +42,6 @@ export async function POST() {
       return NextResponse.json({ error: 'Blockchain transaction failed' }, { status: 500 });
     }
 
-    // Record checkpoint in DB
     await prisma.merkleCheckpoint.create({
       data: {
         batchId,
@@ -57,7 +52,6 @@ export async function POST() {
       }
     });
 
-    // Mark transfers as synced
     const transferIds = unsyncedTransfers.map(t => t.id);
     await prisma.transfer.updateMany({
       where: { id: { in: transferIds } },

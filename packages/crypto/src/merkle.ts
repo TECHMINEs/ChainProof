@@ -55,7 +55,7 @@ export class MerkleTree {
       if (siblingIndex < currentLayer.length) {
         proof.push(currentLayer[siblingIndex]);
       } else {
-        // If no sibling, it duplicated the node itself
+        // An odd node is paired with itself.
         proof.push(currentLayer[currentIndex]);
       }
 

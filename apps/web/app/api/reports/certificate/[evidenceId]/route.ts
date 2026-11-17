@@ -4,7 +4,7 @@ import { getSession } from '@/lib/auth/session';
 import prisma from '@/lib/prisma';
 import { serverError } from '@/lib/http/errors';
 
-export async function POST(request: Request, { params }: { params: { evidenceId: string } }) {
+export async function POST(_req: Request, { params }: { params: { evidenceId: string } }) {
   try {
     const session = await getSession();
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

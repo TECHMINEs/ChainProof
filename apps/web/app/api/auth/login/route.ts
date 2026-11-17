@@ -9,7 +9,6 @@ const loginSchema = z.object({
   password: z.string().min(1),
 });
 
-// removed hashPassword
 
 export async function POST(request: Request) {
   try {

@@ -4,7 +4,7 @@ import { getSession } from '@/lib/auth/session';
 import { contractClient } from '@/lib/blockchain/contractClient';
 import { computeIntegrityScore, hashEvidenceMetadata } from '@chainproof/crypto/src/hash';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(_req: Request, { params }: { params: { id: string } }) {
   try {
     const session = await getSession();
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -77,7 +77,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         data: { integrityScore, lastVerifiedAt: new Date() }
       });
 
-      // D9: Send tamper alert email to admins if integrity compromised
+      // Alert admins when integrity is compromised.
       if (integrityScore < 100) {
         try {
           const admins = await prisma.user.findMany({ where: { role: 'ADMIN', isActive: true } });

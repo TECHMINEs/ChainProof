@@ -16,7 +16,6 @@ export default function InitiateTransferPage() {
     fetch('/api/evidence?pageSize=100').then(r => r.json()).then(d => {
       if (d.evidence) setEvidenceList(d.evidence.filter((e: Evidence) => !['ARCHIVED', 'IN_TRANSIT'].includes(e.status)))
     }).catch(() => setError('Could not load evidence. Check your connection and reload.'))
-    // C3: Use non-admin officer endpoint
     fetch('/api/users/officers').then(r => r.json()).then(d => {
       if (d.data) setOfficers(d.data)
     }).catch(() => setError('Could not load officers. Check your connection and reload.'))

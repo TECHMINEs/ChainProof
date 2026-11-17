@@ -4,7 +4,7 @@ import { getSession } from '@/lib/auth/session';
 import { contractClient } from '@/lib/blockchain/contractClient';
 import { serverError } from '@/lib/http/errors';
 
-export async function POST(request: Request, { params }: { params: { id: string } }) {
+export async function POST(_req: Request, { params }: { params: { id: string } }) {
   try {
     const session = await getSession();
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -21,9 +21,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
       return NextResponse.json({ error: 'Already synced to blockchain' }, { status: 400 });
     }
 
-    // Call smart contract
-    // Requires ADMIN or REGISTRAR role on contract which the wallet signing the tx must have.
-    // The wallet loaded in contractClient must have REGISTRAR_ROLE or ADMIN_ROLE.
+    // The signing wallet needs REGISTRAR_ROLE or ADMIN_ROLE on the contract.
     let txHash = '';
     let blockNumber = 0;
 

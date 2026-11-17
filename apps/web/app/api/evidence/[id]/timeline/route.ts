@@ -4,7 +4,7 @@ import { getSession } from '@/lib/auth/session';
 import { serverError } from '@/lib/http/errors';
 import { publicUserSelect } from '@/lib/selects';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(_req: Request, { params }: { params: { id: string } }) {
   try {
     const session = await getSession();
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

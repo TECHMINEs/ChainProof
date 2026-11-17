@@ -12,7 +12,7 @@ export function setupDemoInterceptor() {
       window.location.pathname.startsWith('/ChainProof') ||
       process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
 
-    // If it's an API route and we are on GitHub Pages or static host
+    // API calls on a static host are served from demo data.
     if (urlStr.includes('/api/')) {
       try {
         if (!isDemoHost) {
@@ -20,10 +20,8 @@ export function setupDemoInterceptor() {
           if (res.ok || res.status !== 404) return res;
         }
       } catch {
-        // network failure -> fallback to demo mock
       }
 
-      // Handle Mock endpoints
       const url = new URL(urlStr, window.location.origin);
       const path = url.pathname.replace(/^\/ChainProof/, '');
 

@@ -7,7 +7,7 @@ import { verifyRegistrationResponse } from '@simplewebauthn/server';
 const RP_ID = process.env.RP_ID || 'localhost';
 const EXPECTED_ORIGIN = process.env.EXPECTED_ORIGIN || 'http://localhost:3000';
 
-// A5: Store challenge in Redis, never trust from client
+// The challenge comes from Redis, never from the client.
 export async function POST(request: Request) {
   try {
     const session = await getSession();
@@ -15,7 +15,6 @@ export async function POST(request: Request) {
 
     const body = await request.json();
 
-    // A5: Retrieve challenge from Redis
     const challengeKey = `webauthn_challenge:${session.user.id}`;
     const storedChallenge = await redis.get(challengeKey);
     if (!storedChallenge) {
@@ -33,7 +32,6 @@ export async function POST(request: Request) {
       expectedRPID: RP_ID,
     });
 
-    // Delete challenge after use
     await redis.del(challengeKey);
 
     if (!verification.verified || !verification.registrationInfo) {
@@ -48,7 +46,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'This passkey is already registered.' }, { status: 409 });
     }
  
-     // A6: Save the new credential to the database
      await prisma.passkeyCredential.create({
        data: {
          userId: session.user.id,

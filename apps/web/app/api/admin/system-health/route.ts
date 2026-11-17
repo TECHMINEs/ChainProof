@@ -22,7 +22,6 @@ export async function GET() {
       }
     };
 
-    // DB Check
     try {
       const start = Date.now();
       await prisma.$queryRaw`SELECT 1`;
@@ -32,7 +31,6 @@ export async function GET() {
       health.status = 'ERROR';
     }
 
-    // Redis Check
     try {
       const start = Date.now();
       await reportQueue.client.ping();
@@ -42,7 +40,6 @@ export async function GET() {
       health.status = 'ERROR';
     }
 
-    // Pinata check
     try {
       const start = Date.now();
       const res = await fetch('https://api.pinata.cloud/data/testAuthentication', {
@@ -59,7 +56,6 @@ export async function GET() {
       health.status = 'ERROR';
     }
 
-    // Polygon Check
     try {
       const start = Date.now();
       const res = await fetch(process.env.POLYGON_RPC_URL || 'http://127.0.0.1:8545', {

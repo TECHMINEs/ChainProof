@@ -1,7 +1,4 @@
-/**
- * B6: Report Queue Worker
- * Run this as a separate process: npx ts-node apps/web/src/workers/reportWorker.ts
- */
+// Report queue worker. Run as its own process: npx ts-node apps/web/src/workers/reportWorker.ts
 import { reportQueue } from '../lib/queue/reportQueue';
 import prisma from '../lib/prisma';
 import QRCode from 'qrcode';
@@ -18,7 +15,6 @@ reportQueue.process(async (job) => {
   console.log(`[ReportWorker] Processing ${reportType} for evidence ${evidenceId}`);
 
   try {
-    // Fetch all needed data
     const [evidence, user] = await Promise.all([
       prisma.evidence.findUnique({
         where: { id: evidenceId },
@@ -35,7 +31,7 @@ reportQueue.process(async (job) => {
       throw new Error(`Evidence or user not found for report job`);
     }
 
-    // Dynamic import to avoid loading heavy PDF libraries in the main process
+    // Loaded lazily: the PDF libraries are heavy.
     const { generateCertificateOfAuthenticity } = await import('@chainproof/crypto/src/pdfGenerator');
 
     // QR code links to the public verification portal for this exhibit
@@ -70,7 +66,6 @@ reportQueue.process(async (job) => {
     // Persist the PDF so /api/reports/download/[reportId] can serve it
     const pdfUrl = await uploadFileBuffer(pdfBuffer);
 
-    // Save report record
     const report = await prisma.report.create({
       data: {
         evidenceId,
@@ -82,7 +77,6 @@ reportQueue.process(async (job) => {
       }
     });
 
-    // Notify user
     await prisma.notification.create({
       data: {
         userId: generatedById,
@@ -93,7 +87,6 @@ reportQueue.process(async (job) => {
       }
     });
 
-    // Email notification
     if (user.email) {
       await sendEmail(
         user.email,
@@ -118,7 +111,6 @@ reportQueue.on('failed', (job, err) => {
   console.error(`[ReportWorker] Job ${job.id} failed:`, err.message);
 });
 
-// Keep process alive
 process.on('SIGTERM', async () => {
   await reportQueue.close();
   process.exit(0);

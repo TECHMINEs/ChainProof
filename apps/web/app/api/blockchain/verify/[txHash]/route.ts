@@ -5,7 +5,7 @@ import { serverError } from '@/lib/http/errors';
 const rpcUrl = process.env.POLYGON_RPC_URL || 'http://127.0.0.1:8545';
 const provider = new ethers.JsonRpcProvider(rpcUrl);
 
-export async function GET(request: Request, { params }: { params: { txHash: string } }) {
+export async function GET(_req: Request, { params }: { params: { txHash: string } }) {
   try {
     const tx = await provider.getTransaction(params.txHash);
     const receipt = await provider.getTransactionReceipt(params.txHash);

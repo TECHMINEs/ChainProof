@@ -4,7 +4,6 @@ const rpcUrl = process.env.POLYGON_RPC_URL || 'http://127.0.0.1:8545';
 const contractAddress = process.env.CHAIN_OF_CUSTODY_CONTRACT_ADDRESS || '';
 const privateKey = process.env.ADMIN_PRIVATE_KEY || '';
 
-// Protect Blockchain Private Key
 if (!privateKey) {
   if (process.env.NODE_ENV === 'production') {
     console.warn('⚠️  ADMIN_PRIVATE_KEY environment variable is not set. Blockchain transactions will not execute.');
@@ -20,7 +19,6 @@ try {
   provider = ethers.getDefaultProvider();
 }
 
-// Only create wallet if private key is available and valid
 let wallet: ethers.Wallet | null = null;
 if (privateKey) {
   try {

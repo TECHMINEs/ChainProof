@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const data = scanSchema.parse(body);
 
-    // Format: chainproof://evidence/EV-12345
+    // chainproof://evidence/EV-12345
     const prefix = 'chainproof://evidence/';
     if (!data.qrData.startsWith(prefix)) {
       return NextResponse.json({ error: 'Invalid QR code format' }, { status: 400 });
@@ -30,7 +30,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Evidence not found' }, { status: 404 });
     }
 
-    // In a full implementation, we might log this scan action in audit logs
     
     return NextResponse.json({
       data: {

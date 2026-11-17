@@ -8,9 +8,8 @@ const stashDir = path.join(rootDir, '..', '..', '.api_stash_tmp');
 const nextConfigPath = path.join(rootDir, 'next.config.js');
 const nextConfigBak = path.join(rootDir, 'next.config.js.bak');
 
-console.log('⚡ [ChainProof Pages Build] Preparing static export for GitHub Pages...');
+console.log('Preparing the static export for GitHub Pages');
 
-// Backup next.config.js
 fs.copyFileSync(nextConfigPath, nextConfigBak);
 
 let cfg = fs.readFileSync(nextConfigPath, 'utf8');
@@ -23,10 +22,9 @@ cfg = cfg.replace(
 );
 fs.writeFileSync(nextConfigPath, cfg);
 
-// Stash app/api
 let stashed = false;
 if (fs.existsSync(apiDir)) {
-  console.log('📦 Stashing server route handlers for client static export...');
+  console.log('Stashing server route handlers');
   if (fs.existsSync(stashDir)) fs.rmSync(stashDir, { recursive: true, force: true });
   fs.cpSync(apiDir, stashDir, { recursive: true });
   fs.rmSync(apiDir, { recursive: true, force: true });
@@ -34,7 +32,7 @@ if (fs.existsSync(apiDir)) {
 }
 
 try {
-  console.log('🚀 Running Next.js static build...');
+  console.log('Running next build');
   execSync('npx next build --no-lint', { stdio: 'inherit', cwd: rootDir });
 
   const outDir = path.join(rootDir, 'out');
@@ -44,21 +42,19 @@ try {
       fs.copyFileSync(path.join(outDir, 'index.html'), path.join(outDir, '404.html'));
     }
   }
-  console.log('✅ Static export generated in out/');
+  console.log('Static export written to out/');
 } catch (err) {
   console.error('❌ Build failed:', err);
   process.exitCode = 1;
 } finally {
-  // Restore app/api
   if (stashed && fs.existsSync(stashDir)) {
-    console.log('🔄 Restoring server route handlers...');
+    console.log('Restoring server route handlers');
     fs.cpSync(stashDir, apiDir, { recursive: true });
     fs.rmSync(stashDir, { recursive: true, force: true });
   }
-  // Restore next.config.js
   if (fs.existsSync(nextConfigBak)) {
     fs.copyFileSync(nextConfigBak, nextConfigPath);
     fs.rmSync(nextConfigBak);
   }
-  console.log('✨ Environment restored.');
+  console.log('Done');
 }

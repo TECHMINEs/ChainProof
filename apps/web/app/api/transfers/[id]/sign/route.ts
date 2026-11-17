@@ -39,7 +39,6 @@ export async function POST(request: Request, { params }: { params: { id: string 
           const user = await prisma.user.findUnique({ where: { id: session.user.id } });
           isValid = !user?.walletAddress || user.walletAddress.toLowerCase() === recoveredAddress.toLowerCase();
         } else if (typeof signature === 'string' && signature.length > 0) {
-          // Authenticated officer session confirmation
           isValid = true;
         }
       } catch (err) {
@@ -78,7 +77,6 @@ export async function POST(request: Request, { params }: { params: { id: string 
 
       await redis.del(challengeKey);
     } else {
-      // Default officer authorization
       isValid = true;
     }
 
@@ -101,7 +99,6 @@ export async function POST(request: Request, { params }: { params: { id: string 
         data: { status: 'STORED', transferCount: { increment: 1 } }
       });
 
-      // Notify sender
       await tx.notification.create({
         data: {
           userId: transfer.fromUserId,
@@ -115,7 +112,6 @@ export async function POST(request: Request, { params }: { params: { id: string 
       return t;
     });
 
-    // Polygon Blockchain Interaction: Record transfer on-chain
     try {
       const { contractClient, signerAvailable } = await import('@/lib/blockchain/contractClient');
       const contractAddress = process.env.CHAIN_OF_CUSTODY_CONTRACT_ADDRESS;
@@ -171,7 +167,6 @@ export async function POST(request: Request, { params }: { params: { id: string 
       console.warn('Polygon blockchain recordTransfer skipped or failed:', chainErr);
     }
 
-    // Email & SMS notification to sender on completion
     try {
       const sender = await prisma.user.findUnique({ where: { id: transfer.fromUserId } });
       if (sender) {

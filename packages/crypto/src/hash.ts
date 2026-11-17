@@ -49,7 +49,7 @@ export function computeIntegrityScore(
   }
 }
 
-// Distance helper using Haversine formula
+// Haversine distance in metres.
 function getDistanceFromLatLonInMeters(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371e3; // Radius of the earth in m
   const dLat = (lat2 - lat1) * Math.PI / 180;  

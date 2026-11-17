@@ -56,7 +56,6 @@ export default function ScannerPage() {
           <div className="card border-line">
             <div className="relative rounded-lg overflow-hidden border border-line">
                <QRScanner onScan={handleScan} />
-               {/* Scanner Overlay Visuals */}
                <div className="scanner-corner scanner-corner-tl" />
                <div className="scanner-corner scanner-corner-tr" />
                <div className="scanner-corner scanner-corner-bl" />

@@ -21,7 +21,7 @@ export async function GET() {
     });
 
     const data: OfficerActivity[] = officers.map(o => {
-      // Calculate avg response hours (time between transfer creation and toSignedAt)
+      // Average hours from transfer creation to toSignedAt.
       let totalHours = 0;
       let count = 0;
       o.transfersTo.forEach(t => {

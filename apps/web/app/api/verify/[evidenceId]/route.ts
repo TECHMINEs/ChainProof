@@ -3,10 +3,9 @@ import prisma from '@/lib/prisma';
 import { contractClient } from '@/lib/blockchain/contractClient';
 import { serverError } from '@/lib/http/errors';
 
-// Public verification portal endpoint (NO AUTH required)
-export async function GET(request: Request, { params }: { params: { evidenceId: string } }) {
+// Public verification endpoint: no auth.
+export async function GET(_req: Request, { params }: { params: { evidenceId: string } }) {
   try {
-    // Attempt to find by ID or evidenceNumber
     const evidence = await prisma.evidence.findFirst({
       where: {
         OR: [

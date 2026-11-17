@@ -20,7 +20,6 @@ export async function POST(request: Request) {
     const body = await request.json();
     const data = schema.parse(body);
 
-    // Retrieve user ID from Redis
     const userId = await redis.get(`webauthn_auth_user:${data.employeeId}`);
     if (!userId) {
       return NextResponse.json({ error: 'Authentication session expired. Please try again.' }, { status: 400 });
@@ -31,7 +30,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Challenge expired. Please try again.' }, { status: 400 });
     }
 
-    // Find credential
     const credential = await prisma.passkeyCredential.findUnique({
       where: { credentialId: data.authResponse.id },
       include: { user: true }
@@ -49,7 +47,6 @@ export async function POST(request: Request) {
       authenticator: toAuthenticatorDevice(credential),
     });
 
-    // Delete challenges after use
     await redis.del(`webauthn_auth_challenge:${userId}`);
     await redis.del(`webauthn_auth_user:${data.employeeId}`);
 
@@ -57,7 +54,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Authentication failed' }, { status: 401 });
     }
 
-    // Update counter
     await prisma.passkeyCredential.update({
       where: { id: credential.id },
       data: { counter: BigInt(verification.authenticationInfo.newCounter), lastUsedAt: new Date() }

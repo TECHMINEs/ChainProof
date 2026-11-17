@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { serverError } from '@/lib/http/errors';
 
-export async function GET(request: Request, { params }: { params: { evidenceNumber: string } }) {
+export async function GET(_req: Request, { params }: { params: { evidenceNumber: string } }) {
   try {
     const evidence = await prisma.evidence.findUnique({
       where: { evidenceNumber: params.evidenceNumber },

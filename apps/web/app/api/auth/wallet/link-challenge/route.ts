@@ -4,7 +4,6 @@ import redis from '@/lib/redis/client';
 import crypto from 'crypto';
 import { serverError } from '@/lib/http/errors';
 
-// A8: Generate server-side nonce for wallet linking
 export async function GET() {
   try {
     const session = await getSession();
@@ -13,7 +12,6 @@ export async function GET() {
     const nonce = crypto.randomUUID();
     const key = `wallet_nonce:${session.user.id}`;
 
-    // Store with 10-minute TTL
     await redis.setex(key, 600, nonce);
 
     return NextResponse.json({ message: `Link wallet to ChainProof: ${nonce}`, nonce });

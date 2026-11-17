@@ -15,7 +15,6 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
   const [address, setAddress] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check if wallet is already connected and permitted
     const ethereum = window.ethereum;
     if (!ethereum) return;
 

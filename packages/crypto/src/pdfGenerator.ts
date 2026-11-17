@@ -46,11 +46,10 @@ export async function generateCertificateOfAuthenticity(options: {
       format: 'a4',
     });
 
-    // Header
     doc.setFontSize(24);
     doc.text('Certificate of Authenticity', doc.internal.pageSize.getWidth() / 2, 20, { align: 'center' });
     
-    // Seal Stamp Placeholder (simplified for this context)
+    // Seal
     doc.setFillColor(200, 0, 0);
     // Kept above the first table (which starts at y=40) so it never overlaps content
     doc.circle(270, 22, 12, 'F');
@@ -59,7 +58,6 @@ export async function generateCertificateOfAuthenticity(options: {
     doc.text('SEAL', 270, 23, { align: 'center' });
     doc.setTextColor(0, 0, 0);
 
-    // Data Table
     autoTable(doc, {
       startY: 40,
       head: [['Field', 'Value']],
@@ -81,7 +79,6 @@ export async function generateCertificateOfAuthenticity(options: {
       headStyles: { fillColor: [220, 38, 38] },
     });
 
-    // Transfer History Table
     const finalY = (doc as DocWithAutoTable).lastAutoTable?.finalY || 100;
     doc.setFontSize(16);
     doc.text('Transfer History', 14, finalY + 15);

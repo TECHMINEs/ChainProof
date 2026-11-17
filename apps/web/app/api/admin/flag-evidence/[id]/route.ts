@@ -4,7 +4,7 @@ import { getSession } from '@/lib/auth/session';
 import { contractClient } from '@/lib/blockchain/contractClient';
 import { serverError } from '@/lib/http/errors';
 
-export async function POST(request: Request, { params }: { params: { id: string } }) {
+export async function POST(_req: Request, { params }: { params: { id: string } }) {
   try {
     const session = await getSession();
     if (!session || session.user.role !== 'ADMIN') {
@@ -19,7 +19,6 @@ export async function POST(request: Request, { params }: { params: { id: string 
       return NextResponse.json({ error: 'Evidence not found' }, { status: 404 });
     }
 
-    // Flag in DB
     const updated = await prisma.evidence.update({
       where: { id: params.id },
       data: { status: 'FLAGGED' }

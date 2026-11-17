@@ -29,7 +29,7 @@ export async function GET(request: Request) {
     const query = evidenceQuerySchema.parse(Object.fromEntries(searchParams));
     const skip = (query.page - 1) * query.pageSize;
 
-    // C1: Role-based access control scoping
+    // Scope to what this role may see.
     const where: Prisma.EvidenceWhereInput = {};
 
     if (query.search) {
@@ -93,9 +93,8 @@ export async function POST(request: Request) {
     const exifData = await extractExifFromBuffer(buffer, collectionLatitude, collectionLongitude);
     const imageUrl = await uploadImageBuffer(buffer);
 
-    // B1: Unique evidence number using DB counter in a transaction
+    // Evidence numbers come from a counter row, incremented in a transaction.
     const evidence = await prisma.$transaction(async (tx) => {
-      // Upsert counter, increment atomically
       const counter = await tx.evidenceCounter.upsert({
         where: { id: 1 },
         update: { sequence: { increment: 1 } },
@@ -143,7 +142,6 @@ export async function POST(request: Request) {
         }
       });
 
-      // B2: Maintain evidenceCount on Case
       await tx.case.update({
         where: { id: caseId },
         data: { evidenceCount: { increment: 1 } }
@@ -156,7 +154,6 @@ export async function POST(request: Request) {
 
     const ip = request.headers.get('x-forwarded-for') ?? undefined;
     const ua = request.headers.get('user-agent') ?? undefined;
-    // D15: Audit log for evidence creation
     await logAudit({
       userId: session.user.id,
       action: 'EVIDENCE_CREATED',

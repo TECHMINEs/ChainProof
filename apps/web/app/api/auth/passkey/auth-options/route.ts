@@ -34,9 +34,9 @@ export async function POST(request: Request) {
       allowCredentials: user.passkeyCredentials.map(toCredentialDescriptor),
     });
 
-    // A5: Store challenge in Redis keyed to user ID with 5-minute TTL
+    // Store challenge in Redis keyed to user ID with 5-minute TTL
     await redis.setex(`webauthn_auth_challenge:${user.id}`, 300, options.challenge);
-    // Also store user ID keyed to employee ID for verify lookup
+    // Map employee ID to user ID for the verify step.
     await redis.setex(`webauthn_auth_user:${data.employeeId}`, 300, user.id);
 
     return NextResponse.json(options);

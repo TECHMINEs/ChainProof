@@ -8,7 +8,6 @@ export function TopBar() {
         <span className="text-xl font-bold dark:text-white">ChainProof</span>
       </div>
       <div className="hidden md:block">
-        {/* Breadcrumbs or page title could go here */}
       </div>
       <div className="flex items-center space-x-4">
         <button className="p-2 text-neutral-400 hover:text-neutral-500 dark:hover:text-neutral-300 relative">

@@ -5,7 +5,6 @@ export async function uploadJSONToIPFS(jsonBody: unknown): Promise<string> {
   const PINATA_API_KEY = process.env.PINATA_API_KEY || '';
   const PINATA_SECRET_API_KEY = process.env.PINATA_SECRET_API_KEY || '';
 
-  // If Pinata credentials exist, attempt to upload to Pinata IPFS
   if (PINATA_JWT || (PINATA_API_KEY && PINATA_SECRET_API_KEY)) {
     try {
       const headers: Record<string, string> = {
@@ -39,7 +38,7 @@ export async function uploadJSONToIPFS(jsonBody: unknown): Promise<string> {
     }
   }
 
-  // Graceful deterministic IPFS v0 CID generation fallback for local/offline development
+  // Without Pinata, derive a deterministic CIDv0 for local development.
   const serialized = typeof jsonBody === 'string' ? jsonBody : JSON.stringify(jsonBody);
   const digest = crypto.createHash('sha256').update(serialized).digest('hex');
   return `Qm${digest.substring(0, 44)}`;

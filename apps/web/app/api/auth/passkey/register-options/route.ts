@@ -32,10 +32,9 @@ export async function GET() {
       },
     });
 
-    // A5: Store challenge in Redis with 5-minute TTL
     await redis.setex(`webauthn_challenge:${session.user.id}`, 300, options.challenge);
 
-    // Do NOT return the challenge in the response — it's server-managed
+    // The challenge is never sent to the client.
     return NextResponse.json(options);
   } catch (error) {
     return serverError('/api/auth/passkey/register-options', error, 'Internal Server Error');

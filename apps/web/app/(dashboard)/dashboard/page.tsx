@@ -37,7 +37,6 @@ export default function DashboardPage() {
   const [myTransfers, setMyTransfers] = useState<Transfer[]>([])
 
   useEffect(() => {
-    // Always fetch user-scoped data
     Promise.all([
       fetch('/api/evidence').then(r => r.json()).catch(() => ({ evidence: [] })),
       fetch('/api/transfers').then(r => r.json()).catch(() => ({ data: [] })),
@@ -46,7 +45,7 @@ export default function DashboardPage() {
       if (tr.data) setMyTransfers(tr.data.slice(0, 5))
     })
 
-    // Try admin analytics — only works for ADMIN/AUDITOR
+    // Admin analytics: ADMIN and AUDITOR only.
     Promise.all([
       fetch('/api/analytics/overview').then(r => r.json()).catch(() => null),
       fetch('/api/analytics/transfers-by-day').then(r => r.json()).catch(() => ({ data: [] })),

@@ -34,7 +34,6 @@ export async function POST(request: Request) {
     for (const action of data.actions) {
       if (action.type === 'SCAN') {
         const payload = action.payload;
-        // Verify evidence exists
         const evidence = await prisma.evidence.findUnique({ where: { id: payload.evidenceId } });
         if (evidence) {
           await logAudit({

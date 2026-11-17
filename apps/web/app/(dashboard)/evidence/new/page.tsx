@@ -27,7 +27,6 @@ export default function RegisterEvidencePage() {
       if (d.cases) setCases(d.cases)
     }).catch(() => setError('Could not load cases. Check your connection and reload.'))
 
-    // D2: Real GPS geolocation
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         pos => setCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
@@ -49,7 +48,6 @@ export default function RegisterEvidencePage() {
     Object.entries(formData).forEach(([k, v]) => data.append(k, v))
     data.append('file', file)
 
-    // D2: Pass actual device GPS (not hardcoded)
     if (coords) {
       data.append('collectionLatitude', String(coords.lat))
       data.append('collectionLongitude', String(coords.lng))
@@ -124,7 +122,6 @@ export default function RegisterEvidencePage() {
             </div>
           </div>
 
-          {/* D2: GPS coordinates display */}
           <div className="p-3 bg-void-200 border border-line rounded-lg text-xs">
             <p className="label mb-1">GPS Coordinates</p>
             {coords ? (

@@ -37,7 +37,6 @@ export default function LoginPage() {
     }
   }
 
-  // D4: Functional passkey login
   const handlePasskeyLogin = async () => {
     if (!employeeId.trim()) {
       setError('Please enter your Employee ID first')
@@ -47,7 +46,7 @@ export default function LoginPage() {
     setPasskeyLoading(true)
 
     try {
-      // Step 1: Get authentication options (challenge stored server-side)
+      // The challenge stays server-side.
       const optRes = await fetch('/api/auth/passkey/auth-options', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -62,10 +61,8 @@ export default function LoginPage() {
 
       const options = await optRes.json()
 
-      // Step 2: Browser prompts biometric/passkey
       const authResponse = await startAuthentication(options)
 
-      // Step 3: Verify on server
       const verifyRes = await fetch('/api/auth/passkey/auth-verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -94,7 +91,6 @@ export default function LoginPage() {
     <div className="flex-1 flex items-center justify-center p-4">
 
       <div className="w-full max-w-sm relative animate-glow-in">
-        {/* Logo */}
         <div className="text-center mb-8">
           <img
             src="/ChainProof/logo-mark.svg"
@@ -162,7 +158,7 @@ export default function LoginPage() {
             <div className="flex-1 neon-line" />
           </div>
 
-          {/* D4: Functional passkey button */}
+          {/* Functional passkey button */}
           <button
             id="passkeyLoginBtn"
             type="button"

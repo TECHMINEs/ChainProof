@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Evidence not found' }, { status: 404 });
     }
 
-    // B9: Verify session user is the current custodian
+    // Only the current custodian can start a transfer.
     const lastCompletedTransfer = evidence.transfers[0];
     const currentCustodianId = lastCompletedTransfer
       ? lastCompletedTransfer.toUserId
@@ -110,7 +110,6 @@ export async function POST(request: Request) {
       return t;
     });
 
-    // D9: Wire email/SMS notifications
     try {
       const { sendEmail } = await import('@/lib/notifications/emailService');
       await sendEmail(
